@@ -1,0 +1,273 @@
+[0.000000] (-) TimerEvent: {}
+[0.001414] (mg996r) JobQueued: {'identifier': 'mg996r', 'dependencies': OrderedDict()}
+[0.001802] (mg996r_messages) JobQueued: {'identifier': 'mg996r_messages', 'dependencies': OrderedDict()}
+[0.002748] (test_operation) JobQueued: {'identifier': 'test_operation', 'dependencies': OrderedDict()}
+[0.003339] (mg996r) JobStarted: {'identifier': 'mg996r'}
+[0.052884] (mg996r_messages) JobStarted: {'identifier': 'mg996r_messages'}
+[0.081099] (test_operation) JobStarted: {'identifier': 'test_operation'}
+[0.099099] (-) TimerEvent: {}
+[0.121002] (mg996r) JobProgress: {'identifier': 'mg996r', 'progress': 'cmake'}
+[0.132883] (mg996r) Command: {'cmd': ['/usr/bin/cmake', '/home/kazu/dev_ws/src/robotarm/mg996r', '-DCMAKE_INSTALL_PREFIX=/home/kazu/dev_ws/src/robotarm/install/mg996r'], 'cwd': '/home/kazu/dev_ws/src/robotarm/build/mg996r', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'ja:en'), ('USER', 'kazu'), ('LC_TIME', 'ja_JP.UTF-8'), ('SSH_AGENT_PID', '1572'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('QT4_IM_MODULE', 'fcitx'), ('HOME', '/home/kazu'), ('OLDPWD', '/home/kazu/dev_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'appmenu-gtk-module:gail:atk-bridge:appmenu-gtk-module'), ('XDG_SEAT_PATH', '/org/freedesktop/DisplayManager/Seat0'), ('LC_MONETARY', 'ja_JP.UTF-8'), ('MANAGERPID', '1414'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1001/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '2564'), ('UBUNTU_MENUPROXY', '1'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'foxy'), ('GTK_IM_MODULE', 'fcitx'), ('LOGNAME', 'kazu'), ('WINDOWID', '39845924'), ('JOURNAL_STREAM', '9:34372'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XTERM_SHELL', '/bin/bash'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/home/kazu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/ubuntu:@/tmp/.ICE-unix/2040,unix/ubuntu:/tmp/.ICE-unix/2040'), ('GDM_LANG', 'ja'), ('INVOCATION_ID', '8c6fdd97e2e8413591970114e1265ce7'), ('PAPERSIZE', 'a4'), ('XDG_SESSION_PATH', '/org/freedesktop/DisplayManager/Session0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ja_JP.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1001'), ('DISPLAY', ':0'), ('LANG', 'ja_JP.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ja_JP.UTF-8'), ('XMODIFIERS', '@im=fcitx'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/home/kazu/.Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AUTH_SOCK', '/run/user/1001/keyring/ssh'), ('XDG_GREETER_DATA_DIR', '/var/lib/lightdm-data/kazu'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ja_JP.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'ja_JP.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1001/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'ja_JP.UTF-8'), ('QT_IM_MODULE', 'fcitx'), ('PWD', '/home/kazu/dev_ws/src/robotarm/build/mg996r'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XTERM_LOCALE', 'ja_JP.UTF-8'), ('CLUTTER_IM_MODULE', 'fcitx'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('XTERM_VERSION', 'XTerm(353)'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('LC_NUMERIC', 'ja_JP.UTF-8'), ('LC_PAPER', 'ja_JP.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.152881] (mg996r_messages) JobProgress: {'identifier': 'mg996r_messages', 'progress': 'cmake'}
+[0.153953] (mg996r_messages) Command: {'cmd': ['/usr/bin/cmake', '/home/kazu/dev_ws/src/robotarm/mg996r_messages', '-DCMAKE_INSTALL_PREFIX=/home/kazu/dev_ws/src/robotarm/install/mg996r_messages'], 'cwd': '/home/kazu/dev_ws/src/robotarm/build/mg996r_messages', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'ja:en'), ('USER', 'kazu'), ('LC_TIME', 'ja_JP.UTF-8'), ('SSH_AGENT_PID', '1572'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('QT4_IM_MODULE', 'fcitx'), ('HOME', '/home/kazu'), ('OLDPWD', '/home/kazu/dev_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'appmenu-gtk-module:gail:atk-bridge:appmenu-gtk-module'), ('XDG_SEAT_PATH', '/org/freedesktop/DisplayManager/Seat0'), ('LC_MONETARY', 'ja_JP.UTF-8'), ('MANAGERPID', '1414'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1001/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '2564'), ('UBUNTU_MENUPROXY', '1'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'foxy'), ('GTK_IM_MODULE', 'fcitx'), ('LOGNAME', 'kazu'), ('WINDOWID', '39845924'), ('JOURNAL_STREAM', '9:34372'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XTERM_SHELL', '/bin/bash'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/home/kazu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/ubuntu:@/tmp/.ICE-unix/2040,unix/ubuntu:/tmp/.ICE-unix/2040'), ('GDM_LANG', 'ja'), ('INVOCATION_ID', '8c6fdd97e2e8413591970114e1265ce7'), ('PAPERSIZE', 'a4'), ('XDG_SESSION_PATH', '/org/freedesktop/DisplayManager/Session0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ja_JP.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1001'), ('DISPLAY', ':0'), ('LANG', 'ja_JP.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ja_JP.UTF-8'), ('XMODIFIERS', '@im=fcitx'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/home/kazu/.Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AUTH_SOCK', '/run/user/1001/keyring/ssh'), ('XDG_GREETER_DATA_DIR', '/var/lib/lightdm-data/kazu'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ja_JP.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'ja_JP.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1001/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'ja_JP.UTF-8'), ('QT_IM_MODULE', 'fcitx'), ('PWD', '/home/kazu/dev_ws/src/robotarm/build/mg996r_messages'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XTERM_LOCALE', 'ja_JP.UTF-8'), ('CLUTTER_IM_MODULE', 'fcitx'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('XTERM_VERSION', 'XTerm(353)'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('LC_NUMERIC', 'ja_JP.UTF-8'), ('LC_PAPER', 'ja_JP.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.178131] (test_operation) JobProgress: {'identifier': 'test_operation', 'progress': 'cmake'}
+[0.179049] (test_operation) Command: {'cmd': ['/usr/bin/cmake', '/home/kazu/dev_ws/src/robotarm/test_operation', '-DCMAKE_INSTALL_PREFIX=/home/kazu/dev_ws/src/robotarm/install/test_operation'], 'cwd': '/home/kazu/dev_ws/src/robotarm/build/test_operation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'ja:en'), ('USER', 'kazu'), ('LC_TIME', 'ja_JP.UTF-8'), ('SSH_AGENT_PID', '1572'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('QT4_IM_MODULE', 'fcitx'), ('HOME', '/home/kazu'), ('OLDPWD', '/home/kazu/dev_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'appmenu-gtk-module:gail:atk-bridge:appmenu-gtk-module'), ('XDG_SEAT_PATH', '/org/freedesktop/DisplayManager/Seat0'), ('LC_MONETARY', 'ja_JP.UTF-8'), ('MANAGERPID', '1414'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1001/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '2564'), ('UBUNTU_MENUPROXY', '1'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'foxy'), ('GTK_IM_MODULE', 'fcitx'), ('LOGNAME', 'kazu'), ('WINDOWID', '39845924'), ('JOURNAL_STREAM', '9:34372'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XTERM_SHELL', '/bin/bash'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/home/kazu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/ubuntu:@/tmp/.ICE-unix/2040,unix/ubuntu:/tmp/.ICE-unix/2040'), ('GDM_LANG', 'ja'), ('INVOCATION_ID', '8c6fdd97e2e8413591970114e1265ce7'), ('PAPERSIZE', 'a4'), ('XDG_SESSION_PATH', '/org/freedesktop/DisplayManager/Session0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ja_JP.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1001'), ('DISPLAY', ':0'), ('LANG', 'ja_JP.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ja_JP.UTF-8'), ('XMODIFIERS', '@im=fcitx'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/home/kazu/.Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AUTH_SOCK', '/run/user/1001/keyring/ssh'), ('XDG_GREETER_DATA_DIR', '/var/lib/lightdm-data/kazu'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ja_JP.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'ja_JP.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1001/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'ja_JP.UTF-8'), ('QT_IM_MODULE', 'fcitx'), ('PWD', '/home/kazu/dev_ws/src/robotarm/build/test_operation'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XTERM_LOCALE', 'ja_JP.UTF-8'), ('CLUTTER_IM_MODULE', 'fcitx'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('XTERM_VERSION', 'XTerm(353)'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('LC_NUMERIC', 'ja_JP.UTF-8'), ('LC_PAPER', 'ja_JP.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.199396] (-) TimerEvent: {}
+[0.301425] (-) TimerEvent: {}
+[0.402265] (-) TimerEvent: {}
+[0.503202] (-) TimerEvent: {}
+[0.604980] (-) TimerEvent: {}
+[0.706897] (-) TimerEvent: {}
+[0.810187] (-) TimerEvent: {}
+[0.903209] (mg996r) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.3.0\n'}
+[0.904279] (mg996r_messages) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.3.0\n'}
+[0.905039] (test_operation) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.3.0\n'}
+[0.910327] (-) TimerEvent: {}
+[1.012423] (-) TimerEvent: {}
+[1.113201] (-) TimerEvent: {}
+[1.214271] (-) TimerEvent: {}
+[1.315006] (-) TimerEvent: {}
+[1.415763] (-) TimerEvent: {}
+[1.516755] (-) TimerEvent: {}
+[1.619558] (-) TimerEvent: {}
+[1.719167] (test_operation) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.3.0\n'}
+[1.720047] (-) TimerEvent: {}
+[1.721352] (mg996r_messages) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.3.0\n'}
+[1.722110] (mg996r) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.3.0\n'}
+[1.751624] (mg996r) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[1.752332] (test_operation) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[1.753106] (mg996r_messages) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[1.820270] (-) TimerEvent: {}
+[1.922637] (-) TimerEvent: {}
+[2.026935] (-) TimerEvent: {}
+[2.128932] (-) TimerEvent: {}
+[2.160506] (mg996r) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[2.161245] (test_operation) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[2.164964] (mg996r_messages) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[2.166946] (test_operation) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[2.168555] (mg996r) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[2.169432] (mg996r_messages) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[2.229137] (-) TimerEvent: {}
+[2.333108] (-) TimerEvent: {}
+[2.437592] (-) TimerEvent: {}
+[2.539466] (-) TimerEvent: {}
+[2.567893] (mg996r_messages) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[2.569291] (mg996r) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[2.570400] (test_operation) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[2.611018] (mg996r_messages) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[2.612342] (mg996r) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[2.613129] (test_operation) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[2.614075] (test_operation) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[2.614513] (mg996r_messages) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[2.614961] (mg996r) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[2.627018] (mg996r) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[2.627803] (test_operation) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[2.628391] (mg996r_messages) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[2.639592] (-) TimerEvent: {}
+[2.741270] (-) TimerEvent: {}
+[2.843222] (-) TimerEvent: {}
+[2.945047] (-) TimerEvent: {}
+[3.049597] (-) TimerEvent: {}
+[3.112138] (mg996r) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[3.112912] (mg996r_messages) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[3.116830] (mg996r_messages) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[3.117836] (mg996r) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[3.118425] (test_operation) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[3.121771] (test_operation) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[3.149937] (-) TimerEvent: {}
+[3.251109] (-) TimerEvent: {}
+[3.352077] (-) TimerEvent: {}
+[3.453021] (-) TimerEvent: {}
+[3.554162] (-) TimerEvent: {}
+[3.556525] (test_operation) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[3.557480] (mg996r) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[3.561551] (mg996r_messages) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[3.600008] (mg996r) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[3.600844] (test_operation) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[3.602086] (mg996r) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[3.602748] (test_operation) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[3.607826] (mg996r_messages) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[3.609868] (mg996r_messages) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[3.638367] (test_operation) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[3.639143] (mg996r_messages) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[3.639783] (mg996r) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[3.654358] (-) TimerEvent: {}
+[3.755242] (-) TimerEvent: {}
+[3.821977] (mg996r_messages) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[3.824163] (mg996r) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[3.825099] (mg996r_messages) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[3.825782] (mg996r) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[3.828957] (test_operation) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[3.829775] (test_operation) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[3.855495] (-) TimerEvent: {}
+[3.957928] (-) TimerEvent: {}
+[4.060689] (-) TimerEvent: {}
+[4.163595] (-) TimerEvent: {}
+[4.266707] (-) TimerEvent: {}
+[4.369811] (-) TimerEvent: {}
+[4.471908] (-) TimerEvent: {}
+[4.574183] (-) TimerEvent: {}
+[4.676330] (-) TimerEvent: {}
+[4.778524] (-) TimerEvent: {}
+[4.880989] (-) TimerEvent: {}
+[4.983447] (-) TimerEvent: {}
+[5.090657] (-) TimerEvent: {}
+[5.193127] (-) TimerEvent: {}
+[5.284073] (mg996r_messages) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)\n'}
+[5.285347] (mg996r) StdoutLine: {'line': b'-- Found rclcpp: 2.4.1 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[5.286195] (test_operation) StdoutLine: {'line': b'-- Found rclcpp: 2.4.1 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[5.293312] (-) TimerEvent: {}
+[5.319084] (mg996r_messages) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[5.384701] (mg996r_messages) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[5.393568] (-) TimerEvent: {}
+[5.495740] (-) TimerEvent: {}
+[5.597707] (-) TimerEvent: {}
+[5.679286] (test_operation) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[5.680141] (mg996r) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[5.697876] (-) TimerEvent: {}
+[5.736612] (mg996r) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[5.737275] (test_operation) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[5.798044] (-) TimerEvent: {}
+[5.898800] (-) TimerEvent: {}
+[6.000751] (-) TimerEvent: {}
+[6.103782] (-) TimerEvent: {}
+[6.205849] (-) TimerEvent: {}
+[6.278806] (mg996r_messages) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "1.1.1f")  \n'}
+[6.306134] (-) TimerEvent: {}
+[6.381459] (mg996r) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "1.1.1f")  \n'}
+[6.392573] (test_operation) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "1.1.1f")  \n'}
+[6.406287] (-) TimerEvent: {}
+[6.508600] (-) TimerEvent: {}
+[6.583532] (mg996r_messages) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/foxy/include  \n'}
+[6.608787] (-) TimerEvent: {}
+[6.685637] (mg996r) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/foxy/include  \n'}
+[6.693489] (test_operation) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/foxy/include  \n'}
+[6.708955] (-) TimerEvent: {}
+[6.810843] (-) TimerEvent: {}
+[6.912867] (-) TimerEvent: {}
+[7.016192] (-) TimerEvent: {}
+[7.118522] (-) TimerEvent: {}
+[7.221149] (-) TimerEvent: {}
+[7.320614] (mg996r_messages) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[7.321301] (-) TimerEvent: {}
+[7.361365] (mg996r) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[7.374328] (test_operation) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[7.421572] (-) TimerEvent: {}
+[7.523654] (-) TimerEvent: {}
+[7.616309] (mg996r_messages) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[7.623870] (-) TimerEvent: {}
+[7.723944] (test_operation) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[7.724770] (-) TimerEvent: {}
+[7.726958] (mg996r) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[7.736222] (mg996r) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[7.737941] (test_operation) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[7.744782] (test_operation) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[7.745467] (mg996r) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[7.825112] (-) TimerEvent: {}
+[7.927821] (-) TimerEvent: {}
+[8.033461] (-) TimerEvent: {}
+[8.135825] (-) TimerEvent: {}
+[8.197284] (test_operation) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[8.198047] (mg996r) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[8.199105] (mg996r) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[8.200007] (test_operation) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[8.236041] (-) TimerEvent: {}
+[8.326250] (mg996r_messages) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.9.2 (/opt/ros/foxy/share/ament_cmake_ros/cmake)\n'}
+[8.336213] (-) TimerEvent: {}
+[8.438003] (-) TimerEvent: {}
+[8.540624] (-) TimerEvent: {}
+[8.581112] (test_operation) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed\n'}
+[8.582111] (test_operation) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads\n'}
+[8.584847] (mg996r) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed\n'}
+[8.585787] (mg996r) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads\n'}
+[8.640840] (-) TimerEvent: {}
+[8.743021] (-) TimerEvent: {}
+[8.851143] (-) TimerEvent: {}
+[8.882155] (test_operation) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads - not found\n'}
+[8.883637] (mg996r) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads - not found\n'}
+[8.884498] (test_operation) StdoutLine: {'line': b'-- Looking for pthread_create in pthread\n'}
+[8.885220] (mg996r) StdoutLine: {'line': b'-- Looking for pthread_create in pthread\n'}
+[8.951343] (-) TimerEvent: {}
+[9.052475] (-) TimerEvent: {}
+[9.156627] (-) TimerEvent: {}
+[9.252633] (test_operation) StdoutLine: {'line': b'-- Looking for pthread_create in pthread - found\n'}
+[9.253317] (mg996r) StdoutLine: {'line': b'-- Looking for pthread_create in pthread - found\n'}
+[9.253722] (test_operation) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[9.254053] (mg996r) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[9.256814] (-) TimerEvent: {}
+[9.357636] (-) TimerEvent: {}
+[9.444102] (mg996r_messages) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[9.457839] (-) TimerEvent: {}
+[9.486721] (mg996r_messages) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[9.558025] (-) TimerEvent: {}
+[9.612105] (mg996r_messages) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[9.630142] (mg996r_messages) StdoutLine: {'line': b'-- Found python_cmake_module: 0.8.1 (/opt/ros/foxy/share/python_cmake_module/cmake)\n'}
+[9.658238] (-) TimerEvent: {}
+[9.761255] (-) TimerEvent: {}
+[9.786715] (mg996r_messages) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/aarch64-linux-gnu/libpython3.8.so (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[9.788361] (mg996r_messages) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[9.789199] (mg996r_messages) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8\n'}
+[9.789755] (mg996r_messages) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.8.so\n'}
+[9.861603] (-) TimerEvent: {}
+[9.913060] (mg996r_messages) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[9.961760] (-) TimerEvent: {}
+[10.064774] (-) TimerEvent: {}
+[10.143112] (mg996r_messages) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[10.164925] (-) TimerEvent: {}
+[10.266781] (-) TimerEvent: {}
+[10.287504] (mg996r) StderrLine: {'line': b'CMake Error at CMakeLists.txt:22 (find_package):\n'}
+[10.288266] (mg996r) StderrLine: {'line': b'  By not providing "Findmg996r_messages.cmake" in CMAKE_MODULE_PATH this\n'}
+[10.288701] (mg996r) StderrLine: {'line': b'  project has asked CMake to find a package configuration file provided by\n'}
+[10.289085] (mg996r) StderrLine: {'line': b'  "mg996r_messages", but CMake did not find one.\n'}
+[10.289454] (mg996r) StderrLine: {'line': b'\n'}
+[10.289825] (mg996r) StderrLine: {'line': b'  Could not find a package configuration file provided by "mg996r_messages"\n'}
+[10.290168] (mg996r) StderrLine: {'line': b'  with any of the following names:\n'}
+[10.290525] (mg996r) StderrLine: {'line': b'\n'}
+[10.290876] (mg996r) StderrLine: {'line': b'    mg996r_messagesConfig.cmake\n'}
+[10.291236] (mg996r) StderrLine: {'line': b'    mg996r_messages-config.cmake\n'}
+[10.291599] (mg996r) StderrLine: {'line': b'\n'}
+[10.292103] (mg996r) StderrLine: {'line': b'  Add the installation prefix of "mg996r_messages" to CMAKE_PREFIX_PATH or\n'}
+[10.292488] (mg996r) StderrLine: {'line': b'  set "mg996r_messages_DIR" to a directory containing one of the above files.\n'}
+[10.292859] (mg996r) StderrLine: {'line': b'  If "mg996r_messages" provides a separate development package or SDK, be\n'}
+[10.293199] (mg996r) StderrLine: {'line': b'  sure it has been installed.\n'}
+[10.293568] (mg996r) StderrLine: {'line': b'\n'}
+[10.293963] (test_operation) StderrLine: {'line': b'CMake Error at CMakeLists.txt:22 (find_package):\n'}
+[10.294393] (test_operation) StderrLine: {'line': b'  By not providing "Findmg996r_messages.cmake" in CMAKE_MODULE_PATH this\n'}
+[10.294729] (test_operation) StderrLine: {'line': b'  project has asked CMake to find a package configuration file provided by\n'}
+[10.295043] (test_operation) StderrLine: {'line': b'  "mg996r_messages", but CMake did not find one.\n'}
+[10.295345] (test_operation) StderrLine: {'line': b'\n'}
+[10.295641] (test_operation) StderrLine: {'line': b'  Could not find a package configuration file provided by "mg996r_messages"\n'}
+[10.296109] (test_operation) StderrLine: {'line': b'  with any of the following names:\n'}
+[10.296418] (test_operation) StderrLine: {'line': b'\n'}
+[10.296716] (test_operation) StderrLine: {'line': b'    mg996r_messagesConfig.cmake\n'}
+[10.297013] (test_operation) StderrLine: {'line': b'    mg996r_messages-config.cmake\n'}
+[10.297306] (test_operation) StderrLine: {'line': b'\n'}
+[10.297596] (test_operation) StderrLine: {'line': b'  Add the installation prefix of "mg996r_messages" to CMAKE_PREFIX_PATH or\n'}
+[10.297887] (test_operation) StderrLine: {'line': b'  set "mg996r_messages_DIR" to a directory containing one of the above files.\n'}
+[10.298179] (test_operation) StderrLine: {'line': b'  If "mg996r_messages" provides a separate development package or SDK, be\n'}
+[10.298471] (test_operation) StderrLine: {'line': b'  sure it has been installed.\n'}
+[10.298800] (test_operation) StderrLine: {'line': b'\n'}
+[10.299118] (test_operation) StderrLine: {'line': b'\n'}
+[10.299425] (mg996r) StderrLine: {'line': b'\n'}
+[10.303409] (mg996r) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[10.304151] (mg996r) StdoutLine: {'line': b'See also "/home/kazu/dev_ws/src/robotarm/build/mg996r/CMakeFiles/CMakeOutput.log".\n'}
+[10.304626] (mg996r) StdoutLine: {'line': b'See also "/home/kazu/dev_ws/src/robotarm/build/mg996r/CMakeFiles/CMakeError.log".\n'}
+[10.305127] (test_operation) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[10.306116] (test_operation) StdoutLine: {'line': b'See also "/home/kazu/dev_ws/src/robotarm/build/test_operation/CMakeFiles/CMakeOutput.log".\n'}
+[10.307344] (test_operation) StdoutLine: {'line': b'See also "/home/kazu/dev_ws/src/robotarm/build/test_operation/CMakeFiles/CMakeError.log".\n'}
+[10.352166] (mg996r) CommandEnded: {'returncode': 1}
+[10.365187] (test_operation) CommandEnded: {'returncode': 1}
+[10.368041] (-) TimerEvent: {}
+[10.408090] (mg996r_messages) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[10.433771] (mg996r_messages) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[10.445473] (mg996r_messages) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[10.469349] (-) TimerEvent: {}
+[10.481912] (mg996r) JobEnded: {'identifier': 'mg996r', 'rc': 1}
+[10.485926] (test_operation) JobEnded: {'identifier': 'test_operation', 'rc': 'SIGINT'}
+[10.488255] (mg996r_messages) StdoutLine: {'line': b'-- Configuring done\n'}
+[10.569553] (-) TimerEvent: {}
+[10.649437] (mg996r_messages) StdoutLine: {'line': b'-- Generating done\n'}
+[10.662882] (mg996r_messages) StdoutLine: {'line': b'-- Build files have been written to: /home/kazu/dev_ws/src/robotarm/build/mg996r_messages\n'}
+[10.669791] (-) TimerEvent: {}
+[10.683522] (mg996r_messages) JobEnded: {'identifier': 'mg996r_messages', 'rc': 'SIGINT'}
+[10.695926] (-) EventReactorShutdown: {}
