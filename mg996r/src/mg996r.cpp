@@ -77,7 +77,7 @@ int Mg996rClass::SerialWrite(unsigned char write_data[], int len){
 
 void Mg996rClass::Mg996rOperation(const mg996r_messages::msg::Mg996rMsg::SharedPtr msg){
 
-	Witmotion_command servo;
+	WITMOTION_COMMAND servo;
 	unsigned short servo_speed = 0;
 	unsigned short servo_position = 0;
 	int serial_rtn = 0;

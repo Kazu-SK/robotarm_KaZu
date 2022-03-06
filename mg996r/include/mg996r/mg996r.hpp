@@ -28,7 +28,7 @@ typedef struct WITMOTION_COMMAND{
 	unsigned char position_DataH;
 
 
-}Witmotion_command;
+}WITMOTION_COMMAND;
 
 
 class Mg996rClass : public rclcpp::Node{
