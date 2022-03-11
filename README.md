@@ -1,4 +1,4 @@
-# robotarm_Kazu
+# robotarm_KaZu
 
 自作ロボットアームの制作
 
