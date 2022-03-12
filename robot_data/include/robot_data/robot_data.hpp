@@ -28,7 +28,7 @@ typedef struct ULINK{
 	int mother;
 	double p[3]; 	//position (world) [mm] 
 	double R[3][3]; //R	(world)
-	float q; // [rad]
+	double q; // [rad]
 	double a[3];    	 
 	double b[3];    //[mm]	
 
@@ -43,6 +43,7 @@ enum ulink_index{
 	ULINK_ID_3,
 	ULINK_ID_4,
 	ULINK_ID_5,
+	ULINK_ID_6,
 	ULINK_NUM
 };
 
@@ -61,6 +62,8 @@ class RobotData : public rclcpp::Node{
 private:
 	ULINK ulink[ULINK_NUM];
 
+	rclcpp::TimerBase::SharedPtr timer_;
+
 public:
 	Matrix *matrix;
 
@@ -73,14 +76,23 @@ public:
 	void ForwardKinematics(int j);
 	void Rodrigues(double Rod[3][3], double w[3], double dt);
 
-	void Output();
 
 	RobotData() : Node("RobotData"){
 		matrix = new Matrix();
+
+		Initialize();
+
+		timer_ = this->create_wall_timer(1000ms, std::bind(&RobotData::TestPublish, this));
+
 	}
 
 	~RobotData(){
 		delete(matrix);
 	}
+
+
+	void TestPublish();
+
+
 
 };
