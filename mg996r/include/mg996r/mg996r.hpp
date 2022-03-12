@@ -39,8 +39,8 @@ private:
 
 
 	int fd;
-	float SLOPE_A;
-	float INTERCEPT_B;
+	double SLOPE_A;
+	double INTERCEPT_B;
 
 	rclcpp::Subscription<mg996r_messages::msg::Mg996rMsg>::SharedPtr mg996r_sub;
 
@@ -63,9 +63,8 @@ public:
 	//Mg996r
 	static const int LOW_PULSE;
 	static const int HIGH_PULSE;
-	static const float LOW_POSITION;
-  	static const float HIGH_POSITION;
-
+	static const double LOW_POSITION;
+  	static const double HIGH_POSITION;
 
 	//WITMOTION module
 	static const unsigned char INIT_CMD;
@@ -78,7 +77,7 @@ public:
 
 	//int EmergencyStop();
 
-	unsigned short TwopointInterpolation(float position){return (unsigned short)(SLOPE_A * position + INTERCEPT_B); }
+	unsigned short TwopointInterpolation(double position);
 
 
 	int SerialWrite(unsigned char write_data[], int len);

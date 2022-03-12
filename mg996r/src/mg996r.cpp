@@ -5,8 +5,8 @@
 //Two-point interpolation 
 const int Mg996rClass::LOW_PULSE = 544;
 const int Mg996rClass::HIGH_PULSE = 2400;
-const float Mg996rClass::LOW_POSITION = 0.0;
-const float Mg996rClass::HIGH_POSITION = 180.0;
+const double Mg996rClass::LOW_POSITION = 0.0;
+const double Mg996rClass::HIGH_POSITION = 180.0;
 
 //WITMOTION module
 const unsigned char Mg996rClass::INIT_CMD = 0xFF;
@@ -63,6 +63,19 @@ int Mg996rClass::EmergencyStop(){
 	return rtn;
 }
 */
+
+unsigned short Mg996rClass::TwopointInterpolation(double position){
+
+	float tmp = 0;
+
+	tmp = (float)(SLOPE_A * position + INTERCEPT_B);
+
+	//RCLCPP_INFO(this->get_logger(), "tmp = %f", tmp);
+	//RCLCPP_INFO(this->get_logger(), "tmp = %d", (unsigned short)tmp);
+
+	return (unsigned short)tmp;
+}
+
 
 int Mg996rClass::SerialWrite(unsigned char write_data[], int len){
 

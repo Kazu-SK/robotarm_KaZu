@@ -20,8 +20,10 @@ typedef struct MG996R_SERVO{
 
 	int channel_num;
 	unsigned short value_speed;
-	float position;
-	float offset;
+	//float position;
+	//float offset;
+	double position;
+	double offset;
 
 }MG996R_SERVO;
 
