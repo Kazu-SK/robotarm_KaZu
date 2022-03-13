@@ -38,13 +38,14 @@ typedef struct ULINK{
 
 enum ulink_index{
 
-	ULINK_ID_1 = 1,
+	ULINK_ID_T,
+	ULINK_ID_1,
 	ULINK_ID_2,
 	ULINK_ID_3,
 	ULINK_ID_4,
 	ULINK_ID_5,
 	ULINK_ID_6,
-	ULINK_NUM
+	ULINK_INDEX_NUM
 };
 
 
@@ -60,15 +61,12 @@ enum vector{
 class RobotData : public rclcpp::Node{
 
 private:
-	ULINK ulink[ULINK_NUM];
+	ULINK ulink[7];
 
 	rclcpp::TimerBase::SharedPtr timer_;
 
 public:
 	Matrix *matrix;
-
-	double link_l[ULINK_NUM];
-	
 
 	void Initialize();
 	void FindMother(int j);
@@ -76,6 +74,9 @@ public:
 	void ForwardKinematics(int j);
 	void Rodrigues(double Rod[3][3], double w[3], double dt);
 
+	void InverseKinematics(double p[3], double pitch, double yaw);
+	void CalcJacobian(double J[5][5]);
+	void CalcVWerr(double e[5]);
 
 	RobotData() : Node("RobotData"){
 		matrix = new Matrix();

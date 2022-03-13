@@ -10,34 +10,38 @@ void RobotData::Initialize(){
 	double UY[3] = {0.0, 1.0, 0.0};
 	double UZ[3] = {0.0, 0.0, 1.0}; 
 
-	/*   Link information  */
+	strcpy(ulink[ULINK_ID_T].name,"Target");
+
 	strcpy(ulink[ULINK_ID_1].name, "Base");  
 	ulink[ULINK_ID_1].sister = 0;
 	ulink[ULINK_ID_1].child = ULINK_ID_2;  
 	ulink[ULINK_ID_1].p[0] = 0.0;
 	ulink[ULINK_ID_1].p[1] = 0.0;
 	ulink[ULINK_ID_1].p[2] = 0.0;
-	ulink[ULINK_ID_1].q = 45.0 * M_PI/180.0;
+	ulink[ULINK_ID_1].q = 0.0;
 	matrix->SubstituteMatrix31(ulink[ULINK_ID_1].a, UZ);
 	matrix->Yaw(ulink[ULINK_ID_1].R,ulink[ULINK_ID_1].q); 
 
+	/*   Link information  */
 	strcpy(ulink[ULINK_ID_2].name, "LINK1");  
 	ulink[ULINK_ID_2].sister = 0;
 	ulink[ULINK_ID_2].child = ULINK_ID_3;  
-	ulink[ULINK_ID_2].b[0] = 0.0; 
-	ulink[ULINK_ID_2].b[1] = 0.0; 
-	ulink[ULINK_ID_2].b[2] = 220.0; 
-	matrix->SubstituteMatrix31(ulink[ULINK_ID_2].a, UY);
-	ulink[ULINK_ID_2].q = -90.0 * M_PI/180.0;
+	ulink[ULINK_ID_2].b[0] = 0.0;
+	ulink[ULINK_ID_2].b[1] = 0.0;
+	ulink[ULINK_ID_2].b[2] = 170.2;
+	ulink[ULINK_ID_2].q = 45.0 * M_PI/180.0;
+	matrix->SubstituteMatrix31(ulink[ULINK_ID_2].a, UZ);
+	matrix->Yaw(ulink[ULINK_ID_2].R,ulink[ULINK_ID_2].q); 
 
 	strcpy(ulink[ULINK_ID_3].name, "LINK2");  
 	ulink[ULINK_ID_3].sister = 0;
-	ulink[ULINK_ID_3].child = ULINK_ID_4;
+	ulink[ULINK_ID_3].child = ULINK_ID_4;  
 	ulink[ULINK_ID_3].b[0] = 0.0; 
 	ulink[ULINK_ID_3].b[1] = 0.0; 
-	ulink[ULINK_ID_3].b[2] = 95.0; 
+	ulink[ULINK_ID_3].b[2] = 29.8; 
 	matrix->SubstituteMatrix31(ulink[ULINK_ID_3].a, UY);
-	ulink[ULINK_ID_3].q = 90.0 * M_PI/180.0;
+	//ulink[ULINK_ID_3].q = -90.0 * M_PI/180.0;
+	ulink[ULINK_ID_3].q = -30.0 * M_PI/180.0;
 
 	strcpy(ulink[ULINK_ID_4].name, "LINK3");  
 	ulink[ULINK_ID_4].sister = 0;
@@ -46,23 +50,36 @@ void RobotData::Initialize(){
 	ulink[ULINK_ID_4].b[1] = 0.0; 
 	ulink[ULINK_ID_4].b[2] = 95.0; 
 	matrix->SubstituteMatrix31(ulink[ULINK_ID_4].a, UY);
-	ulink[ULINK_ID_4].q = 90.0 * M_PI/180.0;
+	ulink[ULINK_ID_4].q = 80.0 * M_PI/180.0;
 
 	strcpy(ulink[ULINK_ID_5].name, "LINK4");  
 	ulink[ULINK_ID_5].sister = 0;
 	ulink[ULINK_ID_5].child = ULINK_ID_6;
 	ulink[ULINK_ID_5].b[0] = 0.0; 
 	ulink[ULINK_ID_5].b[1] = 0.0; 
-	ulink[ULINK_ID_5].b[2] = 77.75; 
-	matrix->SubstituteMatrix31(ulink[ULINK_ID_5].a, UZ);
-	ulink[ULINK_ID_5].q = 45.0 * M_PI/180.0;
+	ulink[ULINK_ID_5].b[2] = 95.0; 
+	matrix->SubstituteMatrix31(ulink[ULINK_ID_5].a, UY);
+	ulink[ULINK_ID_5].q = 80.0 * M_PI/180.0;
 
+	strcpy(ulink[ULINK_ID_6].name, "LINK5");  
+	ulink[ULINK_ID_6].sister = 0;
+	//ulink[ULINK_ID_6].child = ULINK_ID_6;
+	ulink[ULINK_ID_6].child = 0;
+	ulink[ULINK_ID_6].b[0] = 0.0; 
+	ulink[ULINK_ID_6].b[1] = 0.0; 
+	//ulink[ULINK_ID_6].b[2] = 77.75; 
+	ulink[ULINK_ID_6].b[2] = 145.0; 
+	matrix->SubstituteMatrix31(ulink[ULINK_ID_6].a, UZ);
+	ulink[ULINK_ID_6].q = 45.0 * M_PI/180.0;
+
+	/*
 	strcpy(ulink[ULINK_ID_6].name, "LINK5");  
 	ulink[ULINK_ID_6].sister = 0;
 	ulink[ULINK_ID_6].child = 0;
 	ulink[ULINK_ID_6].b[0] = 0.0; 
 	ulink[ULINK_ID_6].b[1] = 0.0; 
 	ulink[ULINK_ID_6].b[2] = 67.25; 
+	*/
 
 	FindMother(ULINK_ID_1);
 }
@@ -125,7 +142,7 @@ void RobotData::ForwardKinematics(int j){
 		}
 		*/
 
-		matrix->InitMatrix33(ulink[j].R);
+		//matrix->InitMatrix33(ulink[j].R);
 		matrix->MultiMatrix33(ulink[j].R, ulink[mom].R, Rod);
 	}
 
@@ -166,6 +183,113 @@ void RobotData::Rodrigues(double R[3][3], double w[3], double dt){
 	
 }
 
+
+void RobotData::InverseKinematics(double p[3], double pitch, double yaw){
+	
+	double pitch_R[3][3] = {0.0, 0.0, 0.0};
+	double yaw_R[3][3] = {0.0, 0.0, 0.0};
+	//double lambda = 0.9;
+	double Jacobian[5][5];
+	double inv_Jacobian[5][5];
+	double err[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+	double tmp[5][5];
+
+
+	matrix->InitMatrix55(Jacobian);
+	matrix->InitMatrix55(inv_Jacobian);
+	matrix->InitMatrix55(tmp);
+
+
+
+	matrix->Pitch(pitch_R, pitch);
+	matrix->Yaw(yaw_R, yaw);
+
+	matrix->MultiMatrix33(ulink[ULINK_ID_T].R, pitch_R, yaw_R);
+	for(int i = 0 ; i < 3 ; i++)ulink[ULINK_ID_T].p[i] = p[i]; 
+
+	ForwardKinematics(ULINK_ID_1);
+
+
+	/*
+	for(int n = 0 ; n < 10 ; n++){
+
+		CalcJacobian(Jacobian);
+
+		//CalcVWerr(err);
+
+	}
+	*/
+
+	CalcJacobian(Jacobian);
+	matrix->InverseMatrix55(inv_Jacobian, Jacobian);
+
+	matrix->MultiMatrix55(tmp, Jacobian, inv_Jacobian);
+}
+
+
+void RobotData::CalcJacobian(double J[5][5]){
+
+	double a[3] = {0.0, 0.0, 0.0};
+	double cross[3] = {0.0, 0.0, 0.0};
+	double perr[3] = {0.0, 0.0, 0.0};
+	int j_col = 0;
+
+/*
+	for(int i = 0 ; i < 3 ; i++)perr[i] = ulink[ULINK_ID_6].p[i] - ulink[ULINK_ID_6].p[i];
+
+	*/
+	for(int j = ULINK_ID_2 ; j < ULINK_INDEX_NUM ; j++){
+
+		matrix->MultiMatrix31(a, ulink[j].R, ulink[j].a);
+
+		/*	
+		std::cout<<a[0]<<std::endl;
+		std::cout<<a[1]<<std::endl;
+		std::cout<<a[2]<<std::endl;
+		*/
+		for(int i = 0 ; i < 3 ; i++){
+			perr[i] = ulink[ULINK_ID_6].p[i] - ulink[j].p[i];
+		}
+	
+		matrix->CrossMatrix31(cross, a, perr);
+
+		J[0][j_col] = cross[0]; 	
+		J[1][j_col] = cross[1]; 	
+		J[2][j_col] = cross[2]; 	
+		J[3][j_col] = a[1];
+		J[4][j_col] = a[2];
+
+		j_col++;
+	}
+
+
+	for(int y = 0 ; y < 5 ; y++){
+
+		for(int z = 0 ; z < 5 ; z++){
+			std::cout<<J[y][z]<<"  ";
+		}
+		std::cout<<std::endl;
+	}
+}
+
+
+void RobotData::CalcVWerr(double e[5]){
+
+	double perr[3] = {0.0, 0.0, 0.0};
+
+	double inv_R[3][3] = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0,0.0,0.0}};
+//	double Rerr[3][3] = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0,0.0,0.0}};
+//	double werr[3] = {0.0, 0.0, 0.0};
+
+
+	for(int i = 0 ; i < 3 ; i++)perr[i] = ulink[ULINK_ID_T].p[i] - ulink[ULINK_ID_6].p[i]; 
+	
+	matrix->InverseMatrix33(inv_R, ulink[ULINK_ID_6].R);
+
+	//matrix->MultiMatrix33(inv_R, ulink[ULINK_ID_T].R);
+}
+
+
 void RobotData::TestPublish(){
 
 	//RCLCPP_INFO(this->getlogger(),"*** position ***");
@@ -176,14 +300,28 @@ void RobotData::TestPublish(){
 	}
 	*/
 
+	
+	
+	double target_p[3] = {100.0, 100.0, 220.0};
+	double pitch = 180.0 * M_PI / 180.0;
+	double yaw = 0.0 * M_PI / 180.0;
+
+	InverseKinematics(target_p, pitch, yaw);
+	
+	
+	
+	/*
 	ForwardKinematics(ULINK_ID_1);
 	
 
-	for(int j = 0 ; j < ULINK_NUM ; j++){
+	for(int j = 0 ; j < ULINK_INDEX_NUM ; j++){
 		RCLCPP_INFO(this->get_logger(),"ulink[%d].name = %s",j,ulink[j].name);
 		for(int i = 0 ; i < 3 ; i++){
 			RCLCPP_INFO(this->get_logger(),"ulink[%d].p[%d] = %f",j,i,ulink[j].p[i]);
 		}
 	}
+	*/
+	
+	
 	
 }
