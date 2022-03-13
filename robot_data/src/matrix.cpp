@@ -96,6 +96,13 @@ void Matrix::InverseMatrix33(double a[3][3], double b[3][3]){
 	double buf;
 	int i,j,k;
 	int n=3;
+	double b_buff[3][3];
+
+	for(int t = 0 ; t < n ; t++){
+		for(int u = 0 ; u < n ; u++){
+			b_buff[t][u] = b[t][u];
+		}
+	}
 	 
 	for(i = 0 ; i < n; i++){
 		 for(j = 0 ; j < n ; j++){
@@ -119,6 +126,38 @@ void Matrix::InverseMatrix33(double a[3][3], double b[3][3]){
 					a[j][k] -= a[i][k] * buf;
 				}
 			}
+		}
+	}
+
+	for(int t = 0 ; t < n ; t++){
+		for(int u = 0 ; u < n ; u++){
+			b[t][u] = b_buff[t][u];
+		}
+	}
+}
+
+
+double Matrix::TraceMatrix33(double a[3][3]){
+
+	double ans = 0.0;
+
+	for(int i = 0 ; i < 3 ; i++){
+
+		ans += a[i][i];
+	}
+
+	return ans;
+}
+
+/* 5*1 Matrix */
+void Matrix::MultiMatrix51(double a[5], double b[5][5], double c[5]){
+
+	for(int i = 0 ; i < 5 ; i++){
+
+		a[i] = 0.0;
+
+		for(int j = 0 ; j < 5 ; j++){
+			a[i] +=  b[i][j] * c[j];
 		}
 	}
 
@@ -146,8 +185,8 @@ void Matrix::InverseMatrix55(double a[5][5], double b[5][5]){
 
 	InitMatrix55(b_buff);
 
-	for(int t = 0 ; t < 5 ; t++){
-		for(int u = 0 ; u < 5 ; u++){
+	for(int t = 0 ; t < n ; t++){
+		for(int u = 0 ; u < n ; u++){
 			b_buff[t][u] = b[t][u];
 		}
 	}
@@ -178,8 +217,8 @@ void Matrix::InverseMatrix55(double a[5][5], double b[5][5]){
 
 	}
 
-	for(int t = 0 ; t < 5 ; t++){
-		for(int u = 0 ; u < 5 ; u++){
+	for(int t = 0 ; t < n ; t++){
+		for(int u = 0 ; u < n ; u++){
 			b[t][u] = b_buff[t][u];
 		}
 	}

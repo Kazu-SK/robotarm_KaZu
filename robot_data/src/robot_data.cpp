@@ -188,42 +188,72 @@ void RobotData::InverseKinematics(double p[3], double pitch, double yaw){
 	
 	double pitch_R[3][3] = {0.0, 0.0, 0.0};
 	double yaw_R[3][3] = {0.0, 0.0, 0.0};
-	//double lambda = 0.9;
+	double lambda = 0.1;
 	double Jacobian[5][5];
 	double inv_Jacobian[5][5];
 	double err[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
-	double tmp[5][5];
+	double tmp[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+	double dq[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+	int index = 0;
 
 
 	matrix->InitMatrix55(Jacobian);
 	matrix->InitMatrix55(inv_Jacobian);
-	matrix->InitMatrix55(tmp);
-
-
 
 	matrix->Pitch(pitch_R, pitch);
 	matrix->Yaw(yaw_R, yaw);
 
 	matrix->MultiMatrix33(ulink[ULINK_ID_T].R, pitch_R, yaw_R);
 	for(int i = 0 ; i < 3 ; i++)ulink[ULINK_ID_T].p[i] = p[i]; 
-
 	ForwardKinematics(ULINK_ID_1);
 
-
-	/*
-	for(int n = 0 ; n < 10 ; n++){
+	RCLCPP_INFO(this->get_logger(),"init");
+	for(int i = 0 ; i < 3 ; i++){
+		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
+	}
+	
+	//int n = 0;
+	for(int n = 0 ; n < 100 ; n++){
+	//for(;;){
 
 		CalcJacobian(Jacobian);
 
-		//CalcVWerr(err);
+		CalcVWerr(err);
 
+		if(matrix->Norm51(err) < 1E-06)
+			break;
+
+		matrix->InverseMatrix55(inv_Jacobian, Jacobian);
+		matrix->MultiMatrix51(tmp, inv_Jacobian, err);
+
+		for(int j = 0 ; j < 5 ; j++){
+			dq[j] = lambda * tmp[j];
+		}
+
+		index = 0;
+		for(int j = ULINK_ID_2 ; j < ULINK_INDEX_NUM ; j++){
+			ulink[j].q += dq[index];	
+			index++;
+		}
+
+		ForwardKinematics(ULINK_ID_1);
+
+		RCLCPP_INFO(this->get_logger(),"n = %d",n);
+		RCLCPP_INFO(this->get_logger(),"loop");
+		for(int i = 0 ; i < 3 ; i++){
+			RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
+		}
+
+	//	n++;
 	}
-	*/
+	
 
+	/*
 	CalcJacobian(Jacobian);
 	matrix->InverseMatrix55(inv_Jacobian, Jacobian);
 
 	matrix->MultiMatrix55(tmp, Jacobian, inv_Jacobian);
+	*/
 }
 
 
@@ -262,7 +292,7 @@ void RobotData::CalcJacobian(double J[5][5]){
 		j_col++;
 	}
 
-
+	/*
 	for(int y = 0 ; y < 5 ; y++){
 
 		for(int z = 0 ; z < 5 ; z++){
@@ -270,6 +300,7 @@ void RobotData::CalcJacobian(double J[5][5]){
 		}
 		std::cout<<std::endl;
 	}
+	*/
 }
 
 
@@ -278,15 +309,55 @@ void RobotData::CalcVWerr(double e[5]){
 	double perr[3] = {0.0, 0.0, 0.0};
 
 	double inv_R[3][3] = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0,0.0,0.0}};
-//	double Rerr[3][3] = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0,0.0,0.0}};
-//	double werr[3] = {0.0, 0.0, 0.0};
+	double Rerr[3][3] = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0,0.0,0.0}};
+
+	double rot2_omega[3] = {0.0, 0.0, 0.0};
+	double werr[3] = {0.0, 0.0, 0.0};
 
 
 	for(int i = 0 ; i < 3 ; i++)perr[i] = ulink[ULINK_ID_T].p[i] - ulink[ULINK_ID_6].p[i]; 
 	
 	matrix->InverseMatrix33(inv_R, ulink[ULINK_ID_6].R);
 
-	//matrix->MultiMatrix33(inv_R, ulink[ULINK_ID_T].R);
+	matrix->MultiMatrix33(Rerr, inv_R, ulink[ULINK_ID_T].R);
+	
+	Rot2Omega(rot2_omega, Rerr); 
+	matrix->MultiMatrix31(werr, ulink[ULINK_ID_6].R, rot2_omega);
+
+	for(int j = 0 ; j < 3 ; j++)e[j] = perr[j];	
+
+	e[3] = werr[1];
+	e[4] = werr[2]; 
+
+}
+
+
+void RobotData::Rot2Omega(double w[3], double R[3][3]){
+
+	double alpha = 0.0;
+	double EPS = 2.22e-16;
+	double th = 0.0;
+
+
+	alpha = matrix->TraceMatrix33(R);
+	alpha = (alpha - 1.0) / 2.0;
+
+
+	if(fabs(alpha-1.0) < EPS){
+
+		w[0] = 0.0;
+		w[1] = 0.0;
+		w[2] = 0.0;
+
+		return; 
+	}	
+
+	th = acos(alpha);
+
+	w[0] = 0.5 * th / sin(th) * (R[2][1] - R[1][2]);
+	w[1] = 0.5 * th / sin(th) * (R[0][2] - R[2][0]);
+	w[2] = 0.5 * th / sin(th) * (R[1][0] - R[0][1]);
+
 }
 
 
@@ -302,7 +373,7 @@ void RobotData::TestPublish(){
 
 	
 	
-	double target_p[3] = {100.0, 100.0, 220.0};
+	double target_p[3] = {100.0, 100.0, 150.0};
 	double pitch = 180.0 * M_PI / 180.0;
 	double yaw = 0.0 * M_PI / 180.0;
 
@@ -310,10 +381,10 @@ void RobotData::TestPublish(){
 	
 	
 	
-	/*
-	ForwardKinematics(ULINK_ID_1);
 	
-
+//	ForwardKinematics(ULINK_ID_1);
+	
+/*
 	for(int j = 0 ; j < ULINK_INDEX_NUM ; j++){
 		RCLCPP_INFO(this->get_logger(),"ulink[%d].name = %s",j,ulink[j].name);
 		for(int i = 0 ; i < 3 ; i++){
@@ -321,6 +392,13 @@ void RobotData::TestPublish(){
 		}
 	}
 	*/
+
+	/*
+	for(int i = 0 ; i < 3 ; i++){
+		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
+	}
+	*/
+	
 	
 	
 	

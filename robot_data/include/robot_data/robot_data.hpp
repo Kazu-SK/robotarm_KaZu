@@ -75,8 +75,11 @@ public:
 	void Rodrigues(double Rod[3][3], double w[3], double dt);
 
 	void InverseKinematics(double p[3], double pitch, double yaw);
+	
+
 	void CalcJacobian(double J[5][5]);
 	void CalcVWerr(double e[5]);
+	void Rot2Omega(double w[3], double R[3][3]);
 
 	RobotData() : Node("RobotData"){
 		matrix = new Matrix();
