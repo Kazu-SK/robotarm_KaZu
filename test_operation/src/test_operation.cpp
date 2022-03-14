@@ -11,7 +11,7 @@ void TestOperation::TestOperationInitialize(){
 	robot_joint[SERVO_ID_0].value_speed = 6;
 	robot_joint[SERVO_ID_0].position = -45.0; 
 	robot_joint[SERVO_ID_0].position = 0.0;
-	robot_joint[SERVO_ID_0].offset = 0.0;
+	robot_joint[SERVO_ID_0].offset = 90.0;
 
 	robot_joint[SERVO_ID_1].channel_num = 1;
 	robot_joint[SERVO_ID_1].value_speed = 4;
@@ -22,19 +22,20 @@ void TestOperation::TestOperationInitialize(){
 	robot_joint[SERVO_ID_2].channel_num = 2;
 	robot_joint[SERVO_ID_2].value_speed = 4;
 	robot_joint[SERVO_ID_2].position = 90.0;
-	robot_joint[SERVO_ID_2].position = 0.0;
-	robot_joint[SERVO_ID_2].offset = 0.0;
+	//robot_joint[SERVO_ID_2].position = 0.0;
+	robot_joint[SERVO_ID_2].offset = 12.8;
 
 	robot_joint[SERVO_ID_3].channel_num = 3;
 	robot_joint[SERVO_ID_3].value_speed = 5;
-	robot_joint[SERVO_ID_3].position = 45.0;
-	robot_joint[SERVO_ID_3].position = 0.0;
+	//robot_joint[SERVO_ID_3].position = 45.0;
+	robot_joint[SERVO_ID_3].position = 90.0;
+	//robot_joint[SERVO_ID_3].position = 0.0;
 	robot_joint[SERVO_ID_3].offset = 90.0;
 
 	robot_joint[SERVO_ID_4].channel_num = 4;
 	robot_joint[SERVO_ID_4].value_speed = 4;
 	robot_joint[SERVO_ID_4].position = -45.0;
-	robot_joint[SERVO_ID_4].position = 90.0;
+	robot_joint[SERVO_ID_4].position = 0.0;
 	robot_joint[SERVO_ID_4].offset = 90.0;
 
 	robot_joint[SERVO_ID_5].channel_num = 5;
