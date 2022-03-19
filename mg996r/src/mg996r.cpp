@@ -121,7 +121,7 @@ void Mg996rClass::Mg996rOperation(const mg996r_messages::msg::Mg996rMsg::SharedP
 	servo.position_DataH = (unsigned char)((servo_position >> 8) & 0xFF);
 
 
-	RCLCPP_INFO(this->get_logger(), "ch = %d, msg->position = %f ,servo_position = %d", msg->ch, msg->position, servo_position);
+	//RCLCPP_INFO(this->get_logger(), "ch = %d, msg->position = %f ,servo_position = %d", msg->ch, msg->position, servo_position);
 	
 	serial_rtn = SerialWrite((unsigned char *)&servo, sizeof(servo));
 

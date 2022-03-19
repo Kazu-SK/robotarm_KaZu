@@ -6,13 +6,15 @@
 #include "rclcpp/rclcpp.hpp"
 #include "robot_data/matrix.hpp"
 
+#include "kinematics_service/srv/inv_kinematics.hpp"
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <math.h>
 
 
-using std::placeholders::_1;
+using namespace std::placeholders;
 
 
 
@@ -40,11 +42,13 @@ enum ulink_index{
 
 	ULINK_ID_T,
 	ULINK_ID_1,
+	/* link information*/
 	ULINK_ID_2,
 	ULINK_ID_3,
 	ULINK_ID_4,
 	ULINK_ID_5,
 	ULINK_ID_6,
+	/* index num */
 	ULINK_INDEX_NUM
 };
 
@@ -64,6 +68,7 @@ private:
 	ULINK ulink[7];
 
 	rclcpp::TimerBase::SharedPtr timer_;
+	rclcpp::Service<kinematics_service::srv::InvKinematics>::SharedPtr service;
 
 public:
 	Matrix *matrix;
@@ -81,6 +86,10 @@ public:
 	void CalcVWerr(double e[5]);
 	void Rot2Omega(double w[3], double R[3][3]);
 
+	void InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response);
+	void TestPublish();
+
+
 	RobotData() : Node("RobotData"){
 		matrix = new Matrix();
 
@@ -88,6 +97,7 @@ public:
 
 		timer_ = this->create_wall_timer(1000ms, std::bind(&RobotData::TestPublish, this));
 
+		service = create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, this, _1, _2));
 	}
 
 	~RobotData(){
@@ -95,7 +105,7 @@ public:
 	}
 
 
-	void TestPublish();
+
 
 
 

@@ -361,6 +361,32 @@ void RobotData::Rot2Omega(double w[3], double R[3][3]){
 }
 
 
+void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response){
+
+	double target_position[3] = {0.0, 0.0, 0.0};
+
+	RCLCPP_INFO(this->get_logger(),"InvKinemaService");
+	RCLCPP_INFO(this->get_logger(),"x = %f",request->x);
+	RCLCPP_INFO(this->get_logger(),"y = %f",request->y);
+	RCLCPP_INFO(this->get_logger(),"z = %f",request->z);
+	RCLCPP_INFO(this->get_logger(),"pitch = %f",request->pitch);
+	RCLCPP_INFO(this->get_logger(),"yaw = %f",request->yaw);
+
+	target_position[0] = request->x;
+	target_position[1] = request->y;
+	target_position[2] = request->z;
+
+	InverseKinematics(target_position, request->pitch, request->yaw); 
+
+	response->link1_q = ulink[ULINK_ID_2].q;
+	response->link2_q = ulink[ULINK_ID_3].q;
+	response->link3_q = ulink[ULINK_ID_4].q;
+	response->link4_q = ulink[ULINK_ID_5].q;
+	response->link5_q = ulink[ULINK_ID_6].q;
+
+}
+
+
 void RobotData::TestPublish(){
 
 	//RCLCPP_INFO(this->getlogger(),"*** position ***");
@@ -373,11 +399,13 @@ void RobotData::TestPublish(){
 
 	
 	
+	/*
 	double target_p[3] = {100.0, 100.0, 150.0};
 	double pitch = 180.0 * M_PI / 180.0;
 	double yaw = 0.0 * M_PI / 180.0;
 
 	InverseKinematics(target_p, pitch, yaw);
+	*/
 	
 	
 	

@@ -18,9 +18,13 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(kinematics_service REQUIRED)
 
 add_executable(${PROJECT_NAME}_node src/robot_data_node.cpp src/robot_data.cpp src/matrix.cpp)
-ament_target_dependencies(${PROJECT_NAME}_node rclcpp)
+#add_executable(server src/robot_data_node.cpp
+
+ament_target_dependencies(${PROJECT_NAME}_node rclcpp kinematics_service)
+#ament_target_dependencies(server rclcpp kinematics_service)
 
 include_directories(
 	include

@@ -18,12 +18,14 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(kinematics_service REQUIRED)
+find_package(mg996r_messages REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 add_executable(${PROJECT_NAME}_node src/test_kinematics_node.cpp src/test_kinematics.cpp)
-ament_target_dependencies(${PROJECT_NAME}_node rclcpp) 
+ament_target_dependencies(${PROJECT_NAME}_node rclcpp kinematics_service mg996r_messages) 
 
 include_directories(
 	include
