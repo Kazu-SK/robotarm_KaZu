@@ -29,6 +29,7 @@ public:
 	void MultiMatrix33(double a[3][3], double b[3][3], double c[3][3]);
 	void InverseMatrix33(double a[3][3], double b[3][3]);
 	double TraceMatrix33(double a[3][3]);
+	void TransposeMatrix33(double a[3][3], double b[3][3]);
 
 	/* 5*1 Matrix */
 	double Norm51(double a[5]){ return sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]+a[3]*a[3]+a[4]*a[4]); };

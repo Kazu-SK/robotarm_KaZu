@@ -149,6 +149,19 @@ double Matrix::TraceMatrix33(double a[3][3]){
 	return ans;
 }
 
+
+void Matrix::TransposeMatrix33(double a[3][3], double b[3][3]){
+
+	for(int i = 0 ; i < 3 ; i++){
+
+		for(int j = 0 ; j < 3 ; j++){
+
+			a[i][j] = b[j][i];
+		}
+	}
+
+}
+
 /* 5*1 Matrix */
 void Matrix::MultiMatrix51(double a[5], double b[5][5], double c[5]){
 
