@@ -367,28 +367,110 @@ void RobotData::Rot2Omega(double w[3], double R[3][3]){
 }
 
 
+void RobotData::InverseKinematicsAna(double p[3], double pitch, double yaw){
+
+	double buff3[3] = {0.0, 0.0, 0.0};
+	double buff4[3] = {0.0, 0.0, 0.0};
+	double RY[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double RZ[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double R1[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double R1_T[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double R2[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double R2_T[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double R3[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double R3_T[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double buff[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+	double buff2[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+
+	double link4_p[3] = {0.0, 0.0, 0.0};	
+
+	double link12_l_sum = ulink[ULINK_ID_2].b[2] + ulink[ULINK_ID_3].b[2];
+
+	double phi = 0.0;
+	double P1P = 0.0;
+
+	double cos_beta = 0.0;
+	double sin_beta = 0.0;
+	double beta = 0.0;
+
+	double cos_alpha = 0.0;
+	double sin_alpha = 0.0;
+	double alpha = 0.0;
+
+
+	matrix->Pitch(RY, pitch); 
+	matrix->Yaw(RZ, yaw); 
+
+	matrix->MultiMatrix31(buff3, RZ, ulink[ULINK_ID_6].b); 
+	matrix->MultiMatrix31(buff4, RY, buff3); 
+
+	link4_p[0] = p[0] - buff4[0]; 
+	link4_p[1] = p[1] - buff4[1]; 
+	link4_p[2] = p[2] - buff4[2]; 
+
+	ulink[ULINK_ID_2].q = atan2(link4_p[1], link4_p[0]);
+	phi = atan2(link4_p[2] - link12_l_sum, sqrt(link4_p[0]*link4_p[0] + link4_p[1]*link4_p[1]));
+	P1P = sqrt(link4_p[0]*link4_p[0] + link4_p[1]*link4_p[1] + (link4_p[2] - link12_l_sum) * (link4_p[2] - link12_l_sum));
+
+	cos_alpha = (ulink[ULINK_ID_4].b[2] * ulink[ULINK_ID_4].b[2] + P1P * P1P - ulink[ULINK_ID_5].b[2] * ulink[ULINK_ID_5].b[2]) / (2.0 * ulink[ULINK_ID_4].b[2] * P1P);
+	sin_alpha = sqrt(1.0 - cos_alpha * cos_alpha); 
+	alpha = atan2(sin_alpha, cos_alpha);	
+
+	cos_beta = (ulink[ULINK_ID_4].b[2] * ulink[ULINK_ID_4].b[2] + ulink[ULINK_ID_5].b[2] * ulink[ULINK_ID_5].b[2] - P1P * P1P) / (2 * ulink[ULINK_ID_4].b[2] * ulink[ULINK_ID_5].b[2]); 
+	sin_beta = sqrt(1.0 - cos_beta * cos_beta);
+	beta = atan2(sin_beta, cos_beta);
+
+	ulink[ULINK_ID_3].q = M_PI / 2.0 - phi - alpha;
+	ulink[ULINK_ID_4].q = M_PI - beta;
+
+	matrix->Yaw(R1, ulink[ULINK_ID_2].q); 
+	matrix->Pitch(R2, ulink[ULINK_ID_3].q); 
+	matrix->Pitch(R3, ulink[ULINK_ID_4].q); 
+	matrix->TransposeMatrix33(R1_T, R1);  
+	matrix->TransposeMatrix33(R2_T, R2);  
+	matrix->TransposeMatrix33(R3_T, R3);  
+	matrix->MultiMatrix33(buff, RZ, RY); 
+	matrix->MultiMatrix33(buff2, R1_T, buff); 
+	matrix->MultiMatrix33(buff, R2_T, buff2);
+	matrix->MultiMatrix33(buff2, R3_T, buff);
+
+	ulink[ULINK_ID_5].q = atan2(buff2[0][2], buff2[2][2]);
+	ulink[ULINK_ID_6].q = atan2(buff2[1][0], buff2[1][1]);
+
+	ForwardKinematics(ULINK_ID_1);
+}
+
+
 void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response){
 
 	double target_position[3] = {0.0, 0.0, 0.0};
 
+	/*
 	RCLCPP_INFO(this->get_logger(),"InvKinemaService");
 	RCLCPP_INFO(this->get_logger(),"x = %f",request->x);
 	RCLCPP_INFO(this->get_logger(),"y = %f",request->y);
 	RCLCPP_INFO(this->get_logger(),"z = %f",request->z);
 	RCLCPP_INFO(this->get_logger(),"pitch = %f",request->pitch);
 	RCLCPP_INFO(this->get_logger(),"yaw = %f",request->yaw);
+	*/
 
 	target_position[0] = request->x;
 	target_position[1] = request->y;
 	target_position[2] = request->z;
 
-	InverseKinematicsNum(target_position, request->pitch, request->yaw); 
+	InverseKinematicsAna(target_position, request->pitch, request->yaw); 
+	//InverseKinematicsNum(target_position, request->pitch, request->yaw); 
 
 	response->link1_q = ulink[ULINK_ID_2].q;
 	response->link2_q = ulink[ULINK_ID_3].q;
 	response->link3_q = ulink[ULINK_ID_4].q;
 	response->link4_q = ulink[ULINK_ID_5].q;
 	response->link5_q = ulink[ULINK_ID_6].q;
+
+	RCLCPP_INFO(this->get_logger(),"InvKinemaService");
+	for(int i = 0 ; i < 3 ; i++){
+		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
+	}
 
 }
 
