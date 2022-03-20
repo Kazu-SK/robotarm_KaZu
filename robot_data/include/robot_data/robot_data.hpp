@@ -79,7 +79,7 @@ public:
 	void ForwardKinematics(int j);
 	void Rodrigues(double Rod[3][3], double w[3], double dt);
 
-	void InverseKinematics(double p[3], double pitch, double yaw);
+	void InverseKinematicsNum(double p[3], double pitch, double yaw);
 	
 
 	void CalcJacobian(double J[5][5]);

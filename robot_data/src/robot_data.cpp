@@ -184,11 +184,13 @@ void RobotData::Rodrigues(double R[3][3], double w[3], double dt){
 }
 
 
-void RobotData::InverseKinematics(double p[3], double pitch, double yaw){
+void RobotData::InverseKinematicsNum(double p[3], double pitch, double yaw){
 	
 	double pitch_R[3][3] = {0.0, 0.0, 0.0};
 	double yaw_R[3][3] = {0.0, 0.0, 0.0};
-	double lambda = 0.1;
+	double lambda = 0.9;
+	int loop_count = 20;
+	double lambda_add = lambda / loop_count; 
 	double Jacobian[5][5];
 	double inv_Jacobian[5][5];
 	double err[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
@@ -213,15 +215,17 @@ void RobotData::InverseKinematics(double p[3], double pitch, double yaw){
 	}
 	
 	//int n = 0;
-	for(int n = 0 ; n < 100 ; n++){
+	for(int n = 1 ; n < loop_count ; n++){
 	//for(;;){
 
 		CalcJacobian(Jacobian);
 
 		CalcVWerr(err);
 
-		if(matrix->Norm51(err) < 1E-06)
+		if(matrix->Norm51(err) < 0.3)
 			break;
+
+
 
 		matrix->InverseMatrix55(inv_Jacobian, Jacobian);
 		matrix->MultiMatrix51(tmp, inv_Jacobian, err);
@@ -243,6 +247,8 @@ void RobotData::InverseKinematics(double p[3], double pitch, double yaw){
 		for(int i = 0 ; i < 3 ; i++){
 			RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
 		}
+
+		lambda += lambda_add;
 
 	//	n++;
 	}
@@ -376,7 +382,7 @@ void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::
 	target_position[1] = request->y;
 	target_position[2] = request->z;
 
-	InverseKinematics(target_position, request->pitch, request->yaw); 
+	InverseKinematicsNum(target_position, request->pitch, request->yaw); 
 
 	response->link1_q = ulink[ULINK_ID_2].q;
 	response->link2_q = ulink[ULINK_ID_3].q;
@@ -404,7 +410,7 @@ void RobotData::TestPublish(){
 	double pitch = 180.0 * M_PI / 180.0;
 	double yaw = 0.0 * M_PI / 180.0;
 
-	InverseKinematics(target_p, pitch, yaw);
+	InverseKinematicsNum(target_p, pitch, yaw);
 	*/
 	
 	
