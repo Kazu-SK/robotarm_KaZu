@@ -39,8 +39,10 @@ private:
 
 
 	int fd;
-	double SLOPE_A;
-	double INTERCEPT_B;
+	double POSITION_SLOPE_A;
+	double POSITION_INTERCEPT_B;
+	double SPEED_SLOPE_A;
+	double SPEED_INTERCEPT_B;
 
 	rclcpp::Subscription<mg996r_messages::msg::Mg996rMsg>::SharedPtr mg996r_sub;
 
@@ -66,6 +68,12 @@ public:
 	static const double LOW_POSITION;
   	static const double HIGH_POSITION;
 
+	static const int LOW_VALUE;
+	static const int HIGH_VALUE;
+	static const double LOW_SPEED;
+  	static const double HIGH_SPEED;
+
+
 	//WITMOTION module
 	static const unsigned char INIT_CMD;
 	static const unsigned char SPEED_CMD;
@@ -77,7 +85,7 @@ public:
 
 	//int EmergencyStop();
 
-	unsigned short TwopointInterpolation(double position);
+	unsigned short TwopointInterpolation(double x, double a, double b);
 
 
 	int SerialWrite(unsigned char write_data[], int len);

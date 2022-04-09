@@ -11,14 +11,15 @@
 using namespace std::chrono_literals;
 
 
-
-
 typedef struct MG996R_SERVO{
 
 	int channel_num;
-	unsigned short value_speed;
+	double value_speed;
 	double position;
 	double offset;
+
+	double diff_position; 
+	double log_position;
 
 }MG996R_SERVO;
 
@@ -45,7 +46,8 @@ enum Action{
 	MOVE,
 	PUT,
 	HAND_OPEN,
-	HAND_CLOSE
+	HAND_CLOSE,
+	NONE
 
 };
 
@@ -62,7 +64,7 @@ private:
 	//kinematics_service::srv::InvKinematics::Request request;
 	//std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request;
 	//
-	rclcpp::Publisher<mg996r_messages::msg::Mg996rMsg>::SharedPtr  test_operation_pub;
+	rclcpp::Publisher<mg996r_messages::msg::Mg996rMsg>::SharedPtr  test_kinematics_pub;
 	rclcpp::TimerBase::SharedPtr timer_;
 	mg996r_messages::msg::Mg996rMsg mg996r_message;
 
@@ -74,19 +76,20 @@ private:
 	double target_pitch;
 	double target_yaw;
 
+
 	enum Action ac;
 
 public:
 	TestKinematics()
 	: Node("test_kinematics")
 	{
-		TestKinematicsInitialize();
 		node = rclcpp::Node::make_shared("inv_kinematics_client");
 		client = node->create_client<kinematics_service::srv::InvKinematics>("inverse_kinematics");
+		TestKinematicsInitialize();
 		//request = std::make_shared<kinematics_service::srv::InvKinematics::Request>();
-		timer_ = create_wall_timer(1s, std::bind(&TestKinematics::ActionMain, this));
+		timer_ = create_wall_timer(5s, std::bind(&TestKinematics::ActionMain, this));
 
-		test_operation_pub = this->create_publisher<mg996r_messages::msg::Mg996rMsg>("mg996r_topic", 100);
+		test_kinematics_pub = this->create_publisher<mg996r_messages::msg::Mg996rMsg>("mg996r_topic", 100);
 		mg996r_pub_timer_ = this->create_wall_timer(120ms, std::bind(&TestKinematics::Publish, this));
 		mg996r_message = mg996r_messages::msg::Mg996rMsg();
 
@@ -108,7 +111,14 @@ public:
 	void TestKinematicsInitialize();
 
 	void Request();
-	void ActionMain();
 
+	void CalcSpeed();
+
+	void InitPosition();
+	void HandClose();
+	void HandOpen();
+
+	void ActionMain();
 	void Publish();
+
 };
