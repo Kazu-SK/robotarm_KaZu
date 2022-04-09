@@ -413,6 +413,8 @@ void RobotData::InverseKinematicsAna(double p[3], double pitch, double yaw){
 	link4_p[1] = p[1] - buff3[1]; 
 	link4_p[2] = p[2] - buff3[2]; 
 
+	matrix->Yaw(RZ, yaw); 
+
 	ulink[ULINK_ID_2].q = atan2(link4_p[1], link4_p[0]);
 
 	phi = atan2(link4_p[2] - link12_l_sum, sqrt(link4_p[0]*link4_p[0] + link4_p[1]*link4_p[1]));
@@ -435,13 +437,14 @@ void RobotData::InverseKinematicsAna(double p[3], double pitch, double yaw){
 	matrix->TransposeMatrix33(R1_T, R1);  
 	matrix->TransposeMatrix33(R2_T, R2);  
 	matrix->TransposeMatrix33(R3_T, R3);  
-	matrix->MultiMatrix33(buff, RZ, RY); 
+	matrix->MultiMatrix33(buff, RY, RZ); 
 	matrix->MultiMatrix33(buff2, R1_T, buff); 
 	matrix->MultiMatrix33(buff, R2_T, buff2);
 	matrix->MultiMatrix33(buff2, R3_T, buff);
 
 	ulink[ULINK_ID_5].q = atan2(buff2[0][2], buff2[2][2]);
-	ulink[ULINK_ID_6].q = atan2(buff2[1][0], buff2[1][1]);
+	ulink[ULINK_ID_6].q = atan2(buff2[2][1], -buff2[2][0]);
+
 
 	ForwardKinematics(ULINK_ID_1);
 }
