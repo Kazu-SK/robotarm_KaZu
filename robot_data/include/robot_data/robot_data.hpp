@@ -89,15 +89,12 @@ public:
 	void Rot2Omega(double w[3], double R[3][3]);
 
 	void InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response);
-	void TestPublish();
 
 
 	RobotData() : Node("RobotData"){
 		matrix = new Matrix();
 
 		Initialize();
-
-		timer_ = this->create_wall_timer(1000ms, std::bind(&RobotData::TestPublish, this));
 
 		service = create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, this, _1, _2));
 	}
