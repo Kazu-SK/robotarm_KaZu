@@ -6,14 +6,15 @@
 void RobotVision::CallbackImage(const sensor_msgs::msg::Image::SharedPtr msg){
 
 	
-	/*
+	
 	cv_bridge::CvImagePtr cv_ptr;
 
 
 	cv_ptr = cv_bridge::toCvCopy(msg, "BGR8");
-	*/
+	
 
 	
+	RCLCPP_INFO(this->get_logger(), "height = %d", msg->height);
 
 
 	/*

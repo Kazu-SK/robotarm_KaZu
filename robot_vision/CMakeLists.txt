@@ -19,10 +19,13 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(image_transport REQUIRED)
+find_package(cv_bridge REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
 add_executable(${PROJECT_NAME}_node src/robot_vision_node.cpp src/robot_vision.cpp)
-ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs OpenCV)
+ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs cv_bridge OpenCV)
+#ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs OpenCV) undefined reference to 'cv_bridge::toCvCopy(..'
 
 include_directories(
 	include
