@@ -19,18 +19,21 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_executable(${PROJECT_NAME}_node src/robot_vision_node.cpp src/robot_vision.cpp)
-ament_target_dependencies(${PROJECT_NAME}_node rclcpp OpenCV)
+ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs OpenCV)
 
 include_directories(
 	include
+	${OpenCV_INCLUDE_DIRS}
 )
 
 install(TARGETS
 	${PROJECT_NAME}_node
 	DESTINATION lib/${PROJECT_NAME}
 )
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
