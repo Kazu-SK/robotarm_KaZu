@@ -133,8 +133,8 @@ void TestKinematics::InitPosition(){
 			target_yaw = 0.0 * M_PI / 180.0;//-atan2(target_y, target_x); 
 			break;
 		case 1:
-			target_x = 20.0;  
-			target_y = -100.0; 
+			target_x = 70.0;  
+			target_y = 0.0; 
 			target_z = 190.0; 
 			target_pitch = 180.0 * M_PI / 180.0; 
 			target_yaw = 0.0 * M_PI / 180.0;//-atan2(target_y, target_x); 
@@ -147,13 +147,11 @@ void TestKinematics::InitPosition(){
 			*/
 			break;
 		case 2:
-			/*	
-			target_x = 10.0;  
-			target_y = -250.0; 
-			target_z = 160.0; 
-			target_pitch = 75.0 * M_PI / 180.0; 
-			target_yaw = 0.0 * M_PI / 180.0; 
-			*/
+			target_x = 20.0;  
+			target_y = -100.0; 
+			target_z = 190.0; 
+			target_pitch = 180.0 * M_PI / 180.0; 
+			target_yaw = 0.0 * M_PI / 180.0;//-atan2(target_y, target_x); 
 
 			break;
 		default:
@@ -166,7 +164,7 @@ void TestKinematics::InitPosition(){
 
 	loop_count++;
 
-	if(loop_count > 1){
+	if(loop_count > 2){
 		loop_count = 0;
 	}
 /*
