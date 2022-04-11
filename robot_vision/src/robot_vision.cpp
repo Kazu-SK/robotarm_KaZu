@@ -9,25 +9,24 @@ void RobotVision::CallbackImage(const sensor_msgs::msg::Image::SharedPtr msg){
 	
 	cv_bridge::CvImagePtr cv_ptr;
 
+	//RCLCPP_INFO(this->get_logger(),"encoding = %c",msg->encoding );
+	//RCLCPP_INFO(this->get_logger(),"encoding");
 
-	cv_ptr = cv_bridge::toCvCopy(msg, "BGR8");
-	
-
-	
-	RCLCPP_INFO(this->get_logger(), "height = %d", msg->height);
-
-
-	/*
 	try{
-
-		cv::imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
+		//cv_ptr = cv_bridge::toCvCopy(msg, msg->encoding);
+		cv_ptr = cv_bridge::toCvCopy(msg, "bgr16");
 	}
-	catch (cv_bridge::Exception& e){
-		
-		
-	}	
-	*/
+	catch(cv_bridge::Exception& e)
+	{
+		RCLCPP_ERROR(this->get_logger(),"cv_bridge exception: %s", e.what());
+		return;
+	}
+	
 
-	//RCLCPP_INFO(this->get_logger(), "height = %d", msg->height);
+
+	cv::imshow("window", cv_ptr->image);
+
+	cv::waitKey(3);
+
 
 }
