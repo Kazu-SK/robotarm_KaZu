@@ -64,12 +64,23 @@ void TestKinematics::Request(){
 	request->yaw = target_yaw;
 
 	RCLCPP_INFO(this->get_logger(),"request");
-	auto result = client->async_send_request(request); 
 	RCLCPP_INFO(this->get_logger(),"result");
 
 	RCLCPP_INFO(this->get_logger(),"target_x = %f", target_x);
 	RCLCPP_INFO(this->get_logger(),"target_y = %f", target_y);
 	RCLCPP_INFO(this->get_logger(),"target_z = %f", target_z);
+	
+
+	while(!client->wait_for_service(1s)){
+
+		if(!rclcpp::ok()){
+			RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
+			break;
+		}
+		RCLCPP_INFO(this->get_logger(), "service not available, waiting again...");
+	}
+	
+	auto result = client->async_send_request(request); 
 
 	if(rclcpp::spin_until_future_complete(node, result) == rclcpp::FutureReturnCode::SUCCESS){
 		

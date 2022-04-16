@@ -94,17 +94,6 @@ public:
 		mg996r_message = mg996r_messages::msg::Mg996rMsg();
 
 		ac = ROBOT_INIT_POSITION;
-		/*
-
-		while(!client->wait_for_service(1s)){
-
-			if(!rclcpp::ok()){
-				RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
-				return;
-			}
-			RCLCPP_INFO(this->get_logger(), "service not available, waiting again...");
-		}
-		*/
 
 	}
 

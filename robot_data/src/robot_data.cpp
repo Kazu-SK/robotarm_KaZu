@@ -4,8 +4,6 @@
 
 void RobotData::Initialize(){
 
-	std::cout<<"robotdata_initialize"<<std::endl;
-
 	//double UX[3] = {1.0, 0.0, 0.0};
 	double UY[3] = {0.0, 1.0, 0.0};
 	double UZ[3] = {0.0, 0.0, 1.0}; 

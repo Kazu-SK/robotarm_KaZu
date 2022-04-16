@@ -68,7 +68,6 @@ private:
 	ULINK ulink[7];
 
 	rclcpp::TimerBase::SharedPtr timer_;
-	rclcpp::Service<kinematics_service::srv::InvKinematics>::SharedPtr service;
 
 public:
 	Matrix *matrix;
@@ -96,7 +95,6 @@ public:
 
 		Initialize();
 
-		service = create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, this, _1, _2));
 	}
 
 	~RobotData(){
