@@ -60,7 +60,7 @@ void RobotData::Initialize(){
 	ulink[ULINK_ID_5].q = 80.0 * M_PI/180.0;
 
 	strcpy(ulink[ULINK_ID_6].name, "LINK5");  
-	ulink[ULINK_ID_6].sister = 0;
+	ulink[ULINK_ID_6].sister = ULINK_ID_CAMERA;
 	//ulink[ULINK_ID_6].child = ULINK_ID_6;
 	ulink[ULINK_ID_6].child = 0;
 	ulink[ULINK_ID_6].b[0] = 0.0; 
@@ -70,6 +70,15 @@ void RobotData::Initialize(){
 	matrix->SubstituteMatrix31(ulink[ULINK_ID_6].a, UZ);
 	ulink[ULINK_ID_6].q = 45.0 * M_PI/180.0;
 
+
+	strcpy(ulink[ULINK_ID_CAMERA].name, "LINK_CAMERA");  
+	ulink[ULINK_ID_CAMERA].sister = 0;
+	ulink[ULINK_ID_CAMERA].child = 0;
+	ulink[ULINK_ID_CAMERA].b[0] = -63.95; 
+	ulink[ULINK_ID_CAMERA].b[1] = 2.4; 
+	ulink[ULINK_ID_CAMERA].b[2] = 101.35; 
+	matrix->SubstituteMatrix31(ulink[ULINK_ID_CAMERA].a, UZ);
+	ulink[ULINK_ID_CAMERA].q = 0.0;
 	/*
 	strcpy(ulink[ULINK_ID_6].name, "LINK5");  
 	ulink[ULINK_ID_6].sister = 0;
@@ -477,6 +486,10 @@ void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::
 	RCLCPP_INFO(this->get_logger(),"InvKinemaService");
 	for(int i = 0 ; i < 3 ; i++){
 		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
+	}
+
+	for(int i = 0 ; i < 3 ; i++){
+		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_CAMERA].p[%d] = %f",i,ulink[ULINK_ID_CAMERA].p[i]);
 	}
 
 }

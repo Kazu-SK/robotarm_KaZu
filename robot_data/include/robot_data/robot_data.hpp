@@ -48,8 +48,11 @@ enum ulink_index{
 	ULINK_ID_4,
 	ULINK_ID_5,
 	ULINK_ID_6,
+	ULINK_ID_CAMERA,
 	/* index num */
 	ULINK_INDEX_NUM
+
+	
 };
 
 
