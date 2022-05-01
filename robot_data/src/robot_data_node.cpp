@@ -4,10 +4,9 @@
 
 int main(int argc, char **argv){
 
-	
-	rclcpp::Service<kinematics_service::srv::InvKinematics>::SharedPtr service;
+	rclcpp::Service<kinematics_service::srv::InvKinematics>::SharedPtr kinema_service;
+	rclcpp::Service<vision_service::srv::CoordinateConversion>::SharedPtr convert_service;
 	std::shared_ptr<rclcpp::Node> node;
-
 
 	rclcpp::init(argc, argv);
 
@@ -16,12 +15,11 @@ int main(int argc, char **argv){
 
 	node = rclcpp::Node::make_shared("robot_data_server");
 
-	service = node->create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, &robot_data, _1, _2));
+	kinema_service = node->create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, &robot_data, _1, _2));
+	convert_service = node->create_service<vision_service::srv::CoordinateConversion>("coordinate_conversion", std::bind(&RobotData::CoordinateConversionService, &robot_data, _1, _2));
 
 	rclcpp::spin(node);
-
 	rclcpp::shutdown();
-	
 
 	
 

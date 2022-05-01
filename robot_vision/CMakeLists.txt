@@ -22,9 +22,10 @@ find_package(OpenCV REQUIRED)
 find_package(image_transport REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(vision_service REQUIRED)
 
 add_executable(${PROJECT_NAME}_node src/robot_vision_node.cpp src/robot_vision.cpp)
-ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs cv_bridge OpenCV)
+ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs cv_bridge OpenCV vision_service)
 #ament_target_dependencies(${PROJECT_NAME}_node rclcpp sensor_msgs OpenCV) undefined reference to 'cv_bridge::toCvCopy(..'
 
 include_directories(

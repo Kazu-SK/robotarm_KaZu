@@ -1,5 +1,5 @@
-uint16 camera_u
-uint16 camera_v 
+int32 camera_u
+int32 camera_v 
 ---
 float64 world_x
 float64 world_y

@@ -7,6 +7,7 @@
 #include "robot_data/matrix.hpp"
 
 #include "kinematics_service/srv/inv_kinematics.hpp"
+#include "vision_service/srv/coordinate_conversion.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -92,6 +93,20 @@ public:
 
 	void InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response);
 
+	void CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response);
+
+	static const double FX;
+	static const double FY;
+	static const double CX;
+	static const double CY;
+
+	static const double PIXEL_SIZE; //[mm/pixel]
+	static const double IMAGE_AREA_X;
+	static const double IMAGE_AREA_Y;
+	static const int REVOLUSION_H;
+	static const int REVOLUSION_V;
+
+	static const double OBJECT_HEIGHT; //[mm] 
 
 	RobotData() : Node("RobotData"){
 		matrix = new Matrix();

@@ -2,6 +2,19 @@
 #include "robot_data/robot_data.hpp"
 
 
+const double RobotData::FX = 698.2863954;
+const double RobotData::FY = 696.32192016;
+const double RobotData::CX = 316.8553548;
+const double RobotData::CY = 233.13340412; 
+
+const double RobotData::OBJECT_HEIGHT = 0.0;
+const double RobotData::PIXEL_SIZE = 0.006; //[mm] 
+const double RobotData::IMAGE_AREA_X = 3.984; //[mm]
+const double RobotData::IMAGE_AREA_Y = 2.952; //[mm]
+const int RobotData::REVOLUSION_H = 640;
+const int RobotData::REVOLUSION_V = 480;
+
+
 void RobotData::Initialize(){
 
 	//double UX[3] = {1.0, 0.0, 0.0};
@@ -60,9 +73,9 @@ void RobotData::Initialize(){
 	ulink[ULINK_ID_5].q = 80.0 * M_PI/180.0;
 
 	strcpy(ulink[ULINK_ID_6].name, "LINK5");  
-	ulink[ULINK_ID_6].sister = ULINK_ID_CAMERA;
+	ulink[ULINK_ID_6].sister = 0;
 	//ulink[ULINK_ID_6].child = ULINK_ID_6;
-	ulink[ULINK_ID_6].child = 0;
+	ulink[ULINK_ID_6].child = ULINK_ID_CAMERA;
 	ulink[ULINK_ID_6].b[0] = 0.0; 
 	ulink[ULINK_ID_6].b[1] = 0.0; 
 	//ulink[ULINK_ID_6].b[2] = 77.75; 
@@ -76,7 +89,8 @@ void RobotData::Initialize(){
 	ulink[ULINK_ID_CAMERA].child = 0;
 	ulink[ULINK_ID_CAMERA].b[0] = -63.95; 
 	ulink[ULINK_ID_CAMERA].b[1] = 2.4; 
-	ulink[ULINK_ID_CAMERA].b[2] = 101.35; 
+	//ulink[ULINK_ID_CAMERA].b[2] = 101.35; 
+	ulink[ULINK_ID_CAMERA].b[2] = -43.65; 
 	matrix->SubstituteMatrix31(ulink[ULINK_ID_CAMERA].a, UZ);
 	ulink[ULINK_ID_CAMERA].q = 0.0;
 	/*
@@ -461,14 +475,6 @@ void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::
 
 	double target_position[3] = {0.0, 0.0, 0.0};
 
-	/*
-	RCLCPP_INFO(this->get_logger(),"InvKinemaService");
-	RCLCPP_INFO(this->get_logger(),"x = %f",request->x);
-	RCLCPP_INFO(this->get_logger(),"y = %f",request->y);
-	RCLCPP_INFO(this->get_logger(),"z = %f",request->z);
-	RCLCPP_INFO(this->get_logger(),"pitch = %f",request->pitch);
-	RCLCPP_INFO(this->get_logger(),"yaw = %f",request->yaw);
-	*/
 
 	target_position[0] = request->x;
 	target_position[1] = request->y;
@@ -491,6 +497,76 @@ void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::
 	for(int i = 0 ; i < 3 ; i++){
 		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_CAMERA].p[%d] = %f",i,ulink[ULINK_ID_CAMERA].p[i]);
 	}
+
+}
+
+
+void RobotData::CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response){
+
+	double camera_matrix[3][3] = {
+		{FX, 0.0, CX},
+		{0.0, FY, CY},
+		{0.0, 0.0, 1.0}	
+	};
+
+	double image_coordinate[3] = {
+		(double)request->camera_u, 
+		(double)request->camera_v, 
+		1.0
+	};
+
+
+	double camera_coordinate[3] = {0.0, 0.0, 0.0};
+	double world_coordinate[3] = {0.0, 0.0, 0.0};
+	double origin_alignment[3] = {0.0, 0.0, 0.0};
+
+	double inv_matrix[3][3] = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
+
+	//double fx_mm = 0.0;
+	//double fy_mm = 0.0;
+
+	/*
+	double s = ulink[ULINK_ID_CAMERA].p[2] / PIXEL_SIZE; 
+
+
+	for(int i = 0 ; i < 3 ; i++){
+		image_coordinate[i] *= s;
+	}
+	*/
+	
+	RCLCPP_INFO(this->get_logger(), "camera_u = %f", (double)request->camera_u);
+	RCLCPP_INFO(this->get_logger(), "camera_v = %f", (double)request->camera_v);
+
+	matrix->InverseMatrix33(inv_matrix,camera_matrix);//, inv_matrix);
+	matrix->MultiMatrix31(camera_coordinate, inv_matrix, image_coordinate);
+
+	//fx_mm = IMAGE_AREA_X / REVOLUSION_H * FX; 
+	//fy_mm = IMAGE_AREA_Y / REVOLUSION_V * FY; 
+	
+	for(int i = 0 ; i < 3 ; i++){
+		//camera_coordinate[i] *= PIXEL_SIZE;
+		//camera_coordinate[i] *= (ulink[ULINK_ID_CAMERA].p[2] - OBJECT_HEIGHT)/PIXEL_SIZE;
+		camera_coordinate[i] *= ulink[ULINK_ID_CAMERA].p[2] - OBJECT_HEIGHT;
+	}
+		
+	RCLCPP_INFO(this->get_logger(), "camera_coordinate[0] = %f", camera_coordinate[0]);
+	RCLCPP_INFO(this->get_logger(), "camera_coordinate[1] = %f", camera_coordinate[1]);
+	RCLCPP_INFO(this->get_logger(), "camera_coordinate[2] = %f", camera_coordinate[2]);
+	//camera_coordinate[i] *= OBJECT_HEIGHT;
+
+	for(int i = 0 ; i < 3 ; i++){
+		origin_alignment[i] = camera_coordinate[i] - ulink[ULINK_ID_CAMERA].p[i];
+	}	
+
+
+	matrix->InitMatrix33(inv_matrix);
+	matrix->InverseMatrix33(inv_matrix, ulink[ULINK_ID_CAMERA].R);//, inv_matrix);
+	matrix->MultiMatrix31(world_coordinate, inv_matrix, origin_alignment);
+	//matrix->MultiMatrix31(origin_alignment, inv_matrix, world_coordinate);
+
+
+	response->world_x = world_coordinate[0];
+	response->world_y = world_coordinate[1];
 
 }
 
