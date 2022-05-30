@@ -7,7 +7,9 @@
 #include "robot_data/matrix.hpp"
 
 #include "kinematics_service/srv/inv_kinematics.hpp"
-#include "vision_service/srv/coordinate_conversion.hpp"
+//#include "vision_service/srv/coordinate_conversion.hpp"
+#include "vision_interfaces/msg/image_coordinate.hpp"
+#include "vision_interfaces/msg/world_coordinate.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,6 +75,11 @@ private:
 
 	rclcpp::TimerBase::SharedPtr timer_;
 
+	vision_interfaces::msg::ImageCoordinate image_coordinate_msg;
+	vision_interfaces::msg::WorldCoordinate world_coordinate_msg;
+
+	rclcpp::Subscription<vision_interfaces::msg::ImageCoordinate>::SharedPtr image_coordinate_sub;
+	rclcpp::Publisher<vision_interfaces::msg::WorldCoordinate>::SharedPtr world_coordinate_pub;
 public:
 	Matrix *matrix;
 
@@ -93,7 +100,8 @@ public:
 
 	void InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response);
 
-	void CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response);
+	//void CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response);
+	void CoordinateConversion(const vision_interfaces::msg::ImageCoordinate::SharedPtr msg);
 
 	static const double FX;
 	static const double FY;
@@ -112,6 +120,9 @@ public:
 		matrix = new Matrix();
 
 		Initialize();
+
+		image_coordinate_sub = this->create_subscription<vision_interfaces::msg::ImageCoordinate>("image_coordinate_topic", 100, std::bind(&RobotData::CoordinateConversion, this, _1));
+		world_coordinate_pub = this->create_publisher<vision_interfaces::msg::WorldCoordinate>("world_coordinate_topic", 100);
 
 	}
 

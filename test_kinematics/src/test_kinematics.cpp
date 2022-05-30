@@ -25,11 +25,13 @@ void TestKinematics::TestKinematicsInitialize(){
 
 	robot_joint[SERVO_ID_2].channel_num = 2;
 	robot_joint[SERVO_ID_2].value_speed = 4;
-	robot_joint[SERVO_ID_2].offset = 8.0;
+	robot_joint[SERVO_ID_2].offset = 4.0;
+	//robot_joint[SERVO_ID_2].offset = 8.0;
 	robot_joint[SERVO_ID_2].log_position = 0.0;
 
 	robot_joint[SERVO_ID_3].channel_num = 3;
 	robot_joint[SERVO_ID_3].value_speed = 5;
+	robot_joint[SERVO_ID_3].offset = 0.0;
 	robot_joint[SERVO_ID_3].offset = 2.5;
 	robot_joint[SERVO_ID_3].log_position = 0.0;
 
@@ -173,11 +175,13 @@ void TestKinematics::InitPosition(){
 
 	Request();
 
-	loop_count++;
+	//loop_count++;
 
-	if(loop_count > 2){
+	/*
+	if(loop_count > 1){
 		loop_count = 0;
 	}
+	*/
 /*
 	target_x = 10.0;  
 	target_y = -90.0; 
@@ -253,7 +257,18 @@ void TestKinematics::ActionMain(){
 }
 
 
-void TestKinematics::Publish(){
+
+void TestKinematics::WorldCoordinateSub(const vision_interfaces::msg::WorldCoordinate::SharedPtr msg){
+
+	world_x = msg->world_x;
+	world_y = msg->world_y;
+	world_z = msg->world_z;
+
+}
+
+
+
+void TestKinematics::Mg996rPub(){
 
 	for(int id = SERVO_ID_0 ; id < SERVO_NUM ; id++){
 		mg996r_message.ch = robot_joint[id].channel_num;

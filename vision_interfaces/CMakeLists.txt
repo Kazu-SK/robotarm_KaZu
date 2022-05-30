@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(vision_service)
+project(vision_interfaces)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -22,13 +22,24 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 find_package(rosidl_default_generators REQUIRED)
+find_package(builtin_interfaces REQUIRED)
 
+
+
+#set(msg_files
+#	"msg/world_coordinate.msg"
+#	"msg/image_coordinate.msg"
+#)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-	"srv/CoordinateConversion.srv"		
+	"msg/WorldCoordinate.msg"	
+	"msg/ImageCoordinate.msg"	
+	DEPENDENCIES builtin_interfaces
 )
 
+
 ament_export_dependencies(rosidl_default_runtime)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

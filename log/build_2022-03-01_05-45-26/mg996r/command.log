@@ -1,2 +1,0 @@
-Invoking command in '/home/kazu/dev_ws/src/robotarm/build/mg996r': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/kazu/dev_ws/src/robotarm/mg996r -DCMAKE_INSTALL_PREFIX=/home/kazu/dev_ws/src/robotarm/install/mg996r
-Invoked command in '/home/kazu/dev_ws/src/robotarm/build/mg996r' returned '1': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/kazu/dev_ws/src/robotarm/mg996r -DCMAKE_INSTALL_PREFIX=/home/kazu/dev_ws/src/robotarm/install/mg996r

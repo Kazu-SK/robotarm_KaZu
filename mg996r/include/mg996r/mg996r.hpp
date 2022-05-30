@@ -11,7 +11,7 @@
 
 #include "mg996r_messages/msg/mg996r_msg.hpp"
 
-using std::placeholders::_1;
+using namespace std::placeholders;
 
 typedef struct WITMOTION_COMMAND{
 

@@ -7,7 +7,7 @@ const double RobotData::FY = 696.32192016;
 const double RobotData::CX = 316.8553548;
 const double RobotData::CY = 233.13340412; 
 
-const double RobotData::OBJECT_HEIGHT = 0.0;
+const double RobotData::OBJECT_HEIGHT = 0.0; //[mm]
 const double RobotData::PIXEL_SIZE = 0.006; //[mm] 
 const double RobotData::IMAGE_AREA_X = 3.984; //[mm]
 const double RobotData::IMAGE_AREA_Y = 2.952; //[mm]
@@ -92,7 +92,7 @@ void RobotData::Initialize(){
 	//ulink[ULINK_ID_CAMERA].b[2] = 101.35; 
 	ulink[ULINK_ID_CAMERA].b[2] = -43.65; 
 	matrix->SubstituteMatrix31(ulink[ULINK_ID_CAMERA].a, UZ);
-	ulink[ULINK_ID_CAMERA].q = 0.0;
+	ulink[ULINK_ID_CAMERA].q = -90.0 * M_PI/180.0;
 	/*
 	strcpy(ulink[ULINK_ID_6].name, "LINK5");  
 	ulink[ULINK_ID_6].sister = 0;
@@ -103,6 +103,10 @@ void RobotData::Initialize(){
 	*/
 
 	FindMother(ULINK_ID_1);
+
+	//world_coordinate[0] = 999.0;
+	//world_coordinate[1] = 999.0;
+	//world_coordinate[2] = 999.0;
 }
 
 
@@ -471,37 +475,32 @@ void RobotData::InverseKinematicsAna(double p[3], double pitch, double yaw){
 }
 
 
+
 void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response){
 
 	double target_position[3] = {0.0, 0.0, 0.0};
-
 
 	target_position[0] = request->x;
 	target_position[1] = request->y;
 	target_position[2] = request->z;
 
 	InverseKinematicsAna(target_position, request->pitch, request->yaw); 
-	//InverseKinematicsNum(target_position, request->pitch, request->yaw); 
 
 	response->link1_q = ulink[ULINK_ID_2].q;
 	response->link2_q = ulink[ULINK_ID_3].q;
 	response->link3_q = ulink[ULINK_ID_4].q;
 	response->link4_q = ulink[ULINK_ID_5].q;
 	response->link5_q = ulink[ULINK_ID_6].q;
-
-	RCLCPP_INFO(this->get_logger(),"InvKinemaService");
-	for(int i = 0 ; i < 3 ; i++){
-		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
-	}
-
-	for(int i = 0 ; i < 3 ; i++){
-		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_CAMERA].p[%d] = %f",i,ulink[ULINK_ID_CAMERA].p[i]);
-	}
-
 }
 
 
-void RobotData::CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response){
+
+//void RobotData::CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response){
+
+
+void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordinate::SharedPtr msg){
+
+	/***  image_coordinate --> camera_coordinate  ***/
 
 	double camera_matrix[3][3] = {
 		{FX, 0.0, CX},
@@ -510,32 +509,35 @@ void RobotData::CoordinateConversionService(const std::shared_ptr<vision_service
 	};
 
 	double image_coordinate[3] = {
-		(double)request->camera_u, 
-		(double)request->camera_v, 
+		(double)msg->image_u, 
+		(double)msg->image_v, 
 		1.0
 	};
 
 
 	double camera_coordinate[3] = {0.0, 0.0, 0.0};
-	double world_coordinate[3] = {0.0, 0.0, 0.0};
-	double origin_alignment[3] = {0.0, 0.0, 0.0};
 
 	double inv_matrix[3][3] = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
 
 	//double fx_mm = 0.0;
 	//double fy_mm = 0.0;
 
-	/*
 	double s = ulink[ULINK_ID_CAMERA].p[2] / PIXEL_SIZE; 
 
 
 	for(int i = 0 ; i < 3 ; i++){
 		image_coordinate[i] *= s;
 	}
-	*/
 	
-	RCLCPP_INFO(this->get_logger(), "camera_u = %f", (double)request->camera_u);
-	RCLCPP_INFO(this->get_logger(), "camera_v = %f", (double)request->camera_v);
+	
+	
+	RCLCPP_INFO(this->get_logger(), "image_u = %f", (double)msg->image_u);
+	RCLCPP_INFO(this->get_logger(), "image_v = %f", (double)msg->image_v);
+	
+	//ulink[ULINK_ID_CAMERA].q = ulink[ULINK_ID_6].q + (90.0 * M_PI/180.0);
+	
+	ulink[ULINK_ID_CAMERA].q = -90.0 * M_PI/180.0;
+	ForwardKinematics(ULINK_ID_1);
 
 	matrix->InverseMatrix33(inv_matrix,camera_matrix);//, inv_matrix);
 	matrix->MultiMatrix31(camera_coordinate, inv_matrix, image_coordinate);
@@ -549,24 +551,122 @@ void RobotData::CoordinateConversionService(const std::shared_ptr<vision_service
 		camera_coordinate[i] *= ulink[ULINK_ID_CAMERA].p[2] - OBJECT_HEIGHT;
 	}
 		
+	
+	
 	RCLCPP_INFO(this->get_logger(), "camera_coordinate[0] = %f", camera_coordinate[0]);
 	RCLCPP_INFO(this->get_logger(), "camera_coordinate[1] = %f", camera_coordinate[1]);
 	RCLCPP_INFO(this->get_logger(), "camera_coordinate[2] = %f", camera_coordinate[2]);
+	
+	
 	//camera_coordinate[i] *= OBJECT_HEIGHT;
+
+
+
+	
+	/***  camera_coordinate --> world_coordinate  ***/
+
+	double R1[3][3];
+
+	double R1_T[3][3];
+	double R2[3][3];
+	double R2_T[3][3];
+	double R3[3][3];
+	double R3_T[3][3];
+	double R4[3][3];
+	double R4_T[3][3];
+	double R5[3][3];
+	double R5_T[3][3];
+	double RC[3][3];
+	double RC_T[3][3];
+	double buff[3];
+	double buff2[3];
+	double origin_alignment[3];
+	double world_coordinate[3];
+
 
 	for(int i = 0 ; i < 3 ; i++){
 		origin_alignment[i] = camera_coordinate[i] - ulink[ULINK_ID_CAMERA].p[i];
 	}	
 
 
+	matrix->Yaw(RC, ulink[ULINK_ID_CAMERA].q); 
+	matrix->InitMatrix33(RC_T);
+	matrix->TransposeMatrix33(RC_T, RC);  
+
+	matrix->Yaw(R5, ulink[ULINK_ID_6].q); 
+	matrix->InitMatrix33(R5_T);
+	matrix->TransposeMatrix33(R5_T, R5);  
+
+	matrix->Pitch(R4, ulink[ULINK_ID_5].q); 
+	matrix->InitMatrix33(R4_T);
+	matrix->TransposeMatrix33(R4_T, R4);  
+
+	matrix->Pitch(R3, ulink[ULINK_ID_4].q); 
+	matrix->InitMatrix33(R3_T);
+	matrix->TransposeMatrix33(R3_T, R3);  
+
+	matrix->Pitch(R2, ulink[ULINK_ID_3].q); 
+	matrix->InitMatrix33(R2_T);
+	matrix->TransposeMatrix33(R2_T, R2);  
+
+	matrix->Yaw(R1, ulink[ULINK_ID_2].q); 
+	matrix->InitMatrix33(R1_T);
+	matrix->TransposeMatrix33(R1_T, R1);  
+
+	
+	matrix->MultiMatrix31(buff, R1_T, origin_alignment);
+	matrix->MultiMatrix31(buff2, R2_T, buff);
+	matrix->MultiMatrix31(buff, R3_T, buff2);
+	matrix->MultiMatrix31(buff2, R4_T, buff);
+	matrix->MultiMatrix31(buff, R5_T, buff2);
+	matrix->MultiMatrix31(world_coordinate, RC_T, buff);
+
+	
+	for(int i = 0 ; i < 3 ; i++){
+		RCLCPP_INFO(this->get_logger(), "world_coordinate[%d] = %f",i, world_coordinate[i]);
+	}
+	
+
+	
+	
+	
 	matrix->InitMatrix33(inv_matrix);
 	matrix->InverseMatrix33(inv_matrix, ulink[ULINK_ID_CAMERA].R);//, inv_matrix);
 	matrix->MultiMatrix31(world_coordinate, inv_matrix, origin_alignment);
-	//matrix->MultiMatrix31(origin_alignment, inv_matrix, world_coordinate);
+	
+	
+//	matrix->MultiMatrix31(origin_alignment, inv_matrix, world_coordinate);
+/*	
+	for(int i = 0 ; i < 3 ; i++){
+		RCLCPP_INFO(this->get_logger(), "world_coordinate[%d] = %f",i, world_coordinate[i]);
+	}
+	*/
 
 
+	/*
 	response->world_x = world_coordinate[0];
 	response->world_y = world_coordinate[1];
+	response->world_z = world_coordinate[2];
+	*/
+
+	
+	
+	
+	world_coordinate_msg.world_x = world_coordinate[0];
+	world_coordinate_msg.world_y = world_coordinate[1];
+	world_coordinate_msg.world_z = world_coordinate[2];
+	
+	
+	
+	
 
 }
+
+
+/*
+void RobotData::pub_callback(){
+
+
+}
+*/
 

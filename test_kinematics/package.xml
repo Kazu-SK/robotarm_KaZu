@@ -11,6 +11,10 @@
 
   <exec_depend>ros2launch</exec_depend>
 
+  <depend>rclcpp</depend>  
+  <depend>vision_interfaces</depend>  
+  <depend>mg996r_messages</depend>  
+
   <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

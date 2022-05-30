@@ -19,17 +19,14 @@ endif()
 find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
-# find_package(<dependency> REQUIRED)
-
 find_package(rosidl_default_generators REQUIRED)
+#find_package(<dependency> REQUIRED)
 
-#set(srv_files 
-#	"srv/InvKinematics.srv"	
-#)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-	"srv/InvKinematics.srv"		
+	"srv/InvKinematics.srv"
 )
+
 
 ament_export_dependencies(rosidl_default_runtime)
 
