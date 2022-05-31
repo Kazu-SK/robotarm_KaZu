@@ -16,72 +16,19 @@ from cv_bridge import CvBridge, CvBridgeError
 class RobotVision(Node):
     def __init__(self):
         super().__init__('robot_vision_node')
-
-        #self.node = rclpy.create_node('robot_vision_node')
-        #self.node = Node('robot_vision_node')
-        #self.cli = self.create_client(CoordinateConversion, 'coordinate_conversion')
+        
         '''
-        self.publisher_ = self.create_publisher(ImageCoordinate, 'image_coordinate_topic', 10)
+        self.publisher_ = self.create_publisher(ImageCoordinate, 'image_coordinate_topic', 100)
         timer_period = 0.3
         self.timer = self.create_timer(timer_period, self.pub_callback)
         '''
 
         self.image_sub = self.create_subscription(Image, "image_raw",self.sub_callback, 10)
 
-
         self.bridge = CvBridge()
 
         self.image_u = -999 
         self.image_v = -999
-
-        self.get_logger().info('init')
-
-
-    '''
-    def send_request(self):
-        self.req = CoordinateConversion.Request()
-        self.req.camera_u = int(self.image_u) 
-        self.req.image_v = int(self.image_v)
-        self.future = self.cli.call_async(self.req)
-
-    def callback_client(self):
-
-        if not self.image_u == None and not self.image_u == None:
-
-            
-            while not self.cli.wait_for_service(timeout_sec=1.0):
-             self.get_logger().info('service not available, waiting again...')
-
-            self.send_request()
-
-            self.get_logger().info('spin_until_future_complete start') 
-            #rclpy.spin_until_future_complete(self, self.future)
-            self.get_logger().info('spin_until_future_complete end') 
-
-
-
-            try:
-                if self.future.done():
-                    response = self.future.result()
-                    self.get_logger().info('world_x = %f, world_y = %f, world_z = %f' % response.world_x, response.world_y, response.world_z) 
-            except Exception as e:
-                self.get_logger().info('Service call failed')# %4' % (e,))
-
-    '''
-
-    
-    '''
-    def pub_callback(self):
-        self.image_u = 400 
-        self.image_v = 200 
-
-        msg = ImageCoordinate()
-        msg.image_u = int(self.image_u)
-        msg.image_v = int(self.image_v)
-
-     #   self.publisher_.publish(msg)
-     '''
-
     
 
     def sub_callback(self,data):

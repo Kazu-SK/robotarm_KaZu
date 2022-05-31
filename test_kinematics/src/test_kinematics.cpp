@@ -264,6 +264,9 @@ void TestKinematics::WorldCoordinateSub(const vision_interfaces::msg::WorldCoord
 	world_y = msg->world_y;
 	world_z = msg->world_z;
 
+	RCLCPP_INFO(this->get_logger(), "world_x = %f",world_x);
+	RCLCPP_INFO(this->get_logger(), "world_y = %f",world_y);
+	RCLCPP_INFO(this->get_logger(), "world_z = %f",world_z);
 }
 
 
