@@ -9,7 +9,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
 #from vision_service.srv import CoordinateConversion 
-#from vision_interfaces.msg import ImageCoordinate
+from vision_interfaces.msg import ImageCoordinate
 #from vision_interfaces.msg import WorldCoordinate
 
 
@@ -17,11 +17,11 @@ class RobotVision(Node):
     def __init__(self):
         super().__init__('robot_vision_node')
         
-        '''
+        
         self.publisher_ = self.create_publisher(ImageCoordinate, 'image_coordinate_topic', 100)
         timer_period = 0.3
         self.timer = self.create_timer(timer_period, self.pub_callback)
-        '''
+        
 
         self.image_sub = self.create_subscription(Image, "image_raw",self.sub_callback, 10)
 
@@ -30,6 +30,15 @@ class RobotVision(Node):
         self.image_u = -999 
         self.image_v = -999
     
+    def pub_callback(self): 
+        self.image_u = 400 
+        self.image_v = 200 
+
+        msg = ImageCoordinate()
+        msg.image_u = int(self.image_u)
+        msg.image_v = int(self.image_v)
+
+        self.publisher_.publish(msg)
 
     def sub_callback(self,data):
 
