@@ -31,10 +31,11 @@ class RobotVision(Node):
         self.image_v = -999
     
     def pub_callback(self): 
-        self.image_u = 400 
-        self.image_v = 200 
 
         msg = ImageCoordinate()
+        #self.get_logger().info('image_u = %d, image_v = %d' % self.image_u, self.image_v) 
+        self.image_u = 10;
+        self.image_u = -10;
         msg.image_u = int(self.image_u)
         msg.image_v = int(self.image_v)
 

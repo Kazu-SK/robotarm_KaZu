@@ -59,15 +59,6 @@ enum ulink_index{
 };
 
 
-/*
-enum vector{
-
-	X,
-	Y,
-	Z
-};
-*/
-
 class RobotData{// : public rclcpp::Node{
 
 private:
@@ -126,15 +117,12 @@ public:
 
 	static const double OBJECT_HEIGHT; //[mm] 
 
-	RobotData(){// : Node("RobotData"){
+	RobotData(){
 
 		matrix = new Matrix();
 
 		Initialize();
 
-		for(int i = 0 ; i < 3 ; i++){
-			world_coordinate[i] = 0.0;
-		}
 	}
 
 	~RobotData(){

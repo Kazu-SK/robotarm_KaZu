@@ -104,9 +104,9 @@ void RobotData::Initialize(){
 
 	FindMother(ULINK_ID_1);
 
-	//world_coordinate[0] = 999.0;
-	//world_coordinate[1] = 999.0;
-	//world_coordinate[2] = 999.0;
+	world_coordinate[0] = 999.0;
+	world_coordinate[1] = 999.0;
+	world_coordinate[2] = 999.0;
 }
 
 
@@ -120,7 +120,6 @@ void RobotData::FindMother(int j){
 
 		if(ulink[j].child != 0){
 			ulink[ulink[j].child].mother = j;
-			//RCLCPP_INFO(this->get_logger(),"ulink[%d].mother = %d",ulink[j].child,ulink[ulink[j].child].mother);
 			FindMother(ulink[j].child);
 
 		}
@@ -148,24 +147,9 @@ void RobotData::ForwardKinematics(int j){
 		mom = ulink[j].mother;
 		matrix->MultiMatrix31(val, ulink[mom].R, ulink[j].b);
 
-		/*
-		RCLCPP_INFO(this->get_logger(),"id = %d",j);
-		for(int z = 0 ; z < 3 ; z++){
-			RCLCPP_INFO(this->get_logger(),"%f %f %f",ulink[mom].R[z][0],ulink[mom].R[z][1],ulink[mom].R[z][2]);
-		}
-		for(int z = 0 ; z < 3 ; z++){
-			RCLCPP_INFO(this->get_logger(),"val[%d] = %f",z,val[z]);
-		}
-		*/
 		matrix->SumMatrix31(ulink[j].p, val, ulink[mom].p);
 
 		Rodrigues(Rod, ulink[j].a, ulink[j].q);
-		/*
-		RCLCPP_INFO(this->get_logger(),"id = %d",j);
-		for(int z = 0 ; z < 3 ; z++){
-			RCLCPP_INFO(this->get_logger(),"%f %f %f",Rod[z][0],Rod[z][1],Rod[z][2]);
-		}
-		*/
 
 		//matrix->InitMatrix33(ulink[j].R);
 		matrix->MultiMatrix33(ulink[j].R, ulink[mom].R, Rod);
@@ -234,12 +218,6 @@ void RobotData::InverseKinematicsNum(double p[3], double pitch, double yaw){
 	for(int i = 0 ; i < 3 ; i++)ulink[ULINK_ID_T].p[i] = p[i]; 
 	ForwardKinematics(ULINK_ID_1);
 
-	//RCLCPP_INFO(this->get_logger(),"init");
-	/*
-	for(int i = 0 ; i < 3 ; i++){
-		RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
-	}
-	*/
 	
 	//int n = 0;
 	for(int n = 1 ; n < loop_count ; n++){
@@ -269,13 +247,6 @@ void RobotData::InverseKinematicsNum(double p[3], double pitch, double yaw){
 
 		ForwardKinematics(ULINK_ID_1);
 
-		//RCLCPP_INFO(this->get_logger(),"n = %d",n);
-		//RCLCPP_INFO(this->get_logger(),"loop");
-		/*
-		for(int i = 0 ; i < 3 ; i++){
-			RCLCPP_INFO(this->get_logger(),"ulink[ULINK_ID_6].p[%d] = %f",i,ulink[ULINK_ID_6].p[i]);
-		}
-		*/
 
 		lambda += lambda_add;
 
@@ -307,11 +278,6 @@ void RobotData::CalcJacobian(double J[5][5]){
 
 		matrix->MultiMatrix31(a, ulink[j].R, ulink[j].a);
 
-		/*	
-		std::cout<<a[0]<<std::endl;
-		std::cout<<a[1]<<std::endl;
-		std::cout<<a[2]<<std::endl;
-		*/
 		for(int i = 0 ; i < 3 ; i++){
 			perr[i] = ulink[ULINK_ID_6].p[i] - ulink[j].p[i];
 		}
@@ -327,15 +293,6 @@ void RobotData::CalcJacobian(double J[5][5]){
 		j_col++;
 	}
 
-	/*
-	for(int y = 0 ; y < 5 ; y++){
-
-		for(int z = 0 ; z < 5 ; z++){
-			std::cout<<J[y][z]<<"  ";
-		}
-		std::cout<<std::endl;
-	}
-	*/
 }
 
 
@@ -498,10 +455,6 @@ void RobotData::InvKinemaService(const std::shared_ptr<kinematics_service::srv::
 }
 
 
-
-//void RobotData::CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response){
-
-
 void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordinate::SharedPtr msg){
 
 	/***  image_coordinate --> camera_coordinate  ***/
@@ -526,18 +479,29 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 	//double fx_mm = 0.0;
 	//double fy_mm = 0.0;
 
-	double s = ulink[ULINK_ID_CAMERA].p[2] / PIXEL_SIZE; 
+	//double s = ulink[ULINK_ID_CAMERA].p[2] / PIXEL_SIZE; 
+	double s = PIXEL_SIZE; 
 
+	//cout<<"image_u = "<<msg->image_u<<endl;
+	//cout<<"s = "<<s<<endl;
+	//cout<<"image_u = "<<msg->image_v<<endl;
 
-	for(int i = 0 ; i < 3 ; i++){
+	cout<<"ulink[ULINK_ID_CAMERA].p[2] = "<<ulink[ULINK_ID_CAMERA].p[2]<<endl;
+
+	
+	for(int i = 0 ; i < 2 ; i++){
+		//cout<<"image_coordinate["<<i<<"]="<<image_coordinate[i]<<endl;
 		image_coordinate[i] *= s;
+
+		/*
+		if(i == 2){
+			image_coordinate[i] *= ulink[ULINK_ID_CAMERA].p[2];
+		}
+		*/
+		//cout<<"image_coordinate["<<i<<"]="<<image_coordinate[i]<<endl;
 	}
 	
 	
-/*	
-	RCLCPP_INFO(this->get_logger(), "image_u = %f", (double)msg->image_u);
-	RCLCPP_INFO(this->get_logger(), "image_v = %f", (double)msg->image_v);
-	*/
 	
 	//ulink[ULINK_ID_CAMERA].q = ulink[ULINK_ID_6].q + (90.0 * M_PI/180.0);
 	
@@ -557,12 +521,6 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 	}
 		
 	
-/*	
-	RCLCPP_INFO(this->get_logger(), "camera_coordinate[0] = %f", camera_coordinate[0]);
-	RCLCPP_INFO(this->get_logger(), "camera_coordinate[1] = %f", camera_coordinate[1]);
-	RCLCPP_INFO(this->get_logger(), "camera_coordinate[2] = %f", camera_coordinate[2]);
-	*/
-	
 	
 	//camera_coordinate[i] *= OBJECT_HEIGHT;
 
@@ -571,6 +529,7 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 	
 	/***  camera_coordinate --> world_coordinate  ***/
 
+	/*
 	double R1[3][3];
 
 	double R1_T[3][3];
@@ -586,14 +545,18 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 	double RC_T[3][3];
 	double buff[3];
 	double buff2[3];
+	*/
 	double origin_alignment[3];
 	//double world_coordinate[3];
 
 
 	for(int i = 0 ; i < 3 ; i++){
 		origin_alignment[i] = camera_coordinate[i] - ulink[ULINK_ID_CAMERA].p[i];
+		cout<<"origin_alignment["<<i<<"]="<<origin_alignment[i]<<endl;
 	}	
 
+
+	/*
 
 	matrix->Yaw(RC, ulink[ULINK_ID_CAMERA].q); 
 	matrix->InitMatrix33(RC_T);
@@ -626,48 +589,18 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 	matrix->MultiMatrix31(buff2, R4_T, buff);
 	matrix->MultiMatrix31(buff, R5_T, buff2);
 	matrix->MultiMatrix31(world_coordinate, RC_T, buff);
-
-	
-	/*
-	for(int i = 0 ; i < 3 ; i++){
-		RCLCPP_INFO(this->get_logger(), "world_coordinate[%d] = %f",i, world_coordinate[i]);
-	}
 	*/
-	
 
-	
-	
 	
 	matrix->InitMatrix33(inv_matrix);
 	matrix->InverseMatrix33(inv_matrix, ulink[ULINK_ID_CAMERA].R);//, inv_matrix);
 	matrix->MultiMatrix31(world_coordinate, inv_matrix, origin_alignment);
-	
-	
-//	matrix->MultiMatrix31(origin_alignment, inv_matrix, world_coordinate);
-/*	
-	for(int i = 0 ; i < 3 ; i++){
-		RCLCPP_INFO(this->get_logger(), "world_coordinate[%d] = %f",i, world_coordinate[i]);
-	}
-	*/
 
-
-	/*
-	response->world_x = world_coordinate[0];
-	response->world_y = world_coordinate[1];
-	response->world_z = world_coordinate[2];
-	*/
-
+	cout<<world_coordinate[0]<<endl;
+	cout<<world_coordinate[1]<<endl;
+	cout<<world_coordinate[2]<<endl;
 	
 	
-	
-	//world_coordinate_msg.world_x = world_coordinate[0];
-	//world_coordinate_msg.world_y = world_coordinate[1];
-	//world_coordinate_msg.world_z = world_coordinate[2];
-	
-	
-        //world_coordinate_pub->publish(world_coordinate_msg);	
-	
-
 }
 
 
