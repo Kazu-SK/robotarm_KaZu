@@ -29,15 +29,17 @@ class RobotVision(Node):
 
         self.image_u = -999 
         self.image_v = -999
+        self.h = 480
+        self.w = 640
     
     def pub_callback(self): 
 
         msg = ImageCoordinate()
         #self.get_logger().info('image_u = %d, image_v = %d' % self.image_u, self.image_v) 
-        self.image_u = 10;
-        self.image_u = -10;
-        msg.image_u = int(self.image_u)
-        msg.image_v = int(self.image_v)
+        #self.image_u = 10;
+        #self.image_u = -10;
+        msg.image_u = int(self.image_u) - self.h / 2
+        msg.image_v = int(self.image_v) - self.w / 2
 
         self.publisher_.publish(msg)
 
@@ -48,8 +50,6 @@ class RobotVision(Node):
 
         mtx = np.array([[698.28642314, 0.0, 316.85536112],[0.0, 696.32195198, 233.13342883],[0.0, 0.0, 1.0]])
         dist = np.array([[-2.86983128e-01, -8.12594804e-01, -1.46773385e-03, -6.55372020e-04, 2.56431010e+00]])
-        h = 480
-        w = 640
 
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")

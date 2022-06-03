@@ -479,7 +479,7 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 	//double fx_mm = 0.0;
 	//double fy_mm = 0.0;
 
-	//double s = ulink[ULINK_ID_CAMERA].p[2] / PIXEL_SIZE; 
+//	double s = ulink[ULINK_ID_CAMERA].p[2] / PIXEL_SIZE; 
 	double s = PIXEL_SIZE; 
 
 	//cout<<"image_u = "<<msg->image_u<<endl;
@@ -488,10 +488,11 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 
 	cout<<"ulink[ULINK_ID_CAMERA].p[2] = "<<ulink[ULINK_ID_CAMERA].p[2]<<endl;
 
-	
+/*	
 	for(int i = 0 ; i < 2 ; i++){
 		//cout<<"image_coordinate["<<i<<"]="<<image_coordinate[i]<<endl;
 		image_coordinate[i] *= s;
+		*/
 
 		/*
 		if(i == 2){
@@ -499,7 +500,7 @@ void RobotData::CoordinateConversion(const vision_interfaces::msg::ImageCoordina
 		}
 		*/
 		//cout<<"image_coordinate["<<i<<"]="<<image_coordinate[i]<<endl;
-	}
+//	}
 	
 	
 	
