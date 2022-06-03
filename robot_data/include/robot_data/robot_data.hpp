@@ -68,7 +68,7 @@ enum vector{
 };
 */
 
-class RobotData : public rclcpp::Node{
+class RobotData{// : public rclcpp::Node{
 
 private:
 	ULINK ulink[7];
@@ -78,10 +78,9 @@ private:
 	vision_interfaces::msg::ImageCoordinate image_coordinate_msg;
 	vision_interfaces::msg::WorldCoordinate world_coordinate_msg;
 
-	rclcpp::Subscription<vision_interfaces::msg::ImageCoordinate>::SharedPtr image_coordinate_sub;
-	rclcpp::Publisher<vision_interfaces::msg::WorldCoordinate>::SharedPtr world_coordinate_pub;
+	double world_coordinate[3];
 
-	rclcpp::Service<kinematics_service::srv::InvKinematics>::SharedPtr kinema_service;
+
 public:
 	Matrix *matrix;
 
@@ -102,8 +101,17 @@ public:
 
 	void InvKinemaService(const std::shared_ptr<kinematics_service::srv::InvKinematics::Request> request,std::shared_ptr<kinematics_service::srv::InvKinematics::Response> response);
 
-	//void CoordinateConversionService(const std::shared_ptr<vision_service::srv::CoordinateConversion::Request> request,std::shared_ptr<vision_service::srv::CoordinateConversion::Response> response);
 	void CoordinateConversion(const vision_interfaces::msg::ImageCoordinate::SharedPtr msg);
+
+
+	void getWorldCoordinate(double w_coordinate[]){
+		
+		for(int i = 0 ; i < 3 ; i++){
+			w_coordinate[i] = world_coordinate[i];
+		}
+	};
+
+
 
 	static const double FX;
 	static const double FY;
@@ -118,17 +126,15 @@ public:
 
 	static const double OBJECT_HEIGHT; //[mm] 
 
-	RobotData() : Node("RobotData"){
-
-		//kinema_service = this->create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, this, _1, _2));
-		kinema_service = this->create_service<kinematics_service::srv::InvKinematics>("inverse_kinematics", std::bind(&RobotData::InvKinemaService, this, _1, _2));
-
-		image_coordinate_sub = this->create_subscription<vision_interfaces::msg::ImageCoordinate>("image_coordinate_topic", 100, std::bind(&RobotData::CoordinateConversion, this, _1));
-		world_coordinate_pub = this->create_publisher<vision_interfaces::msg::WorldCoordinate>("world_coordinate_topic", 100);
+	RobotData(){// : Node("RobotData"){
 
 		matrix = new Matrix();
 
 		Initialize();
+
+		for(int i = 0 ; i < 3 ; i++){
+			world_coordinate[i] = 0.0;
+		}
 	}
 
 	~RobotData(){
